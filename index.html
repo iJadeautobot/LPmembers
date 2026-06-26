@@ -29,6 +29,53 @@
       overflow-x: hidden;
     }
 
+    /* ==========================================
+       หน้า ENTER SITE (หน้ากดเข้าเว็บเพื่อเปิดเพลง)
+       ========================================== */
+    .enter-overlay {
+      position: fixed;
+      inset: 0;
+      background: #060609;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .enter-overlay.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .enter-btn {
+      background: transparent;
+      border: 2px solid var(--purple);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      padding: 15px 40px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(123,95,255,0.2);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+    .enter-btn:hover {
+      background: var(--purple);
+      box-shadow: 0 0 30px rgba(123,95,255,0.6);
+      transform: scale(1.05);
+    }
+    .enter-subtext {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 15px;
+      letter-spacing: 1px;
+    }
+
     /* NAV */
     nav {
       display: flex;
@@ -370,6 +417,12 @@
 </head>
 <body>
 
+<!-- บล็อกหน้า Welcome (นับเป็นการตอบสนอง 1 ครั้งเพื่อบังคับให้เบราว์เซอร์เปิดเพลง) -->
+<div class="enter-overlay" id="enterOverlay">
+  <button class="enter-btn" onclick="enterSite()">Enter Family</button>
+  <div class="enter-subtext">// LOPEZ IMM'A KIL'EM ALL //</div>
+</div>
+
 <nav>
   <div class="nav-logo">FAMILY LOPEZ</div>
   <ul class="nav-links">
@@ -438,7 +491,7 @@
 
 <footer><span>FAMILY LOPEZ</span> · 2025</footer>
 
-<!-- เครื่องเล่นวิดีโอ YouTube ซ่อนไว้ใต้ดิน (ซ่อนสายตา ไม่รบกวนดีไซน์เว็บ) -->
+<!-- เครื่องเล่นวิดีโอ YouTube ซ่อนไว้ใต้ดิน -->
 <div id="youtube-player" style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"></div>
 
 <script>
@@ -495,7 +548,6 @@ function getInitials(name) {
 const grid = document.getElementById('membersGrid');
 const allSearchable = [founder, ...leaders, ...members];
   
-// Facebook
 function makeCard(m) {
   const fbLinks = {
     "Smith Lopez": "https://www.facebook.com/SmithLopezX",
@@ -515,7 +567,6 @@ function makeCard(m) {
     ? `<div class="role-badge badge-leader">👑 LEADER</div>`
     : ``; 
     
-  // Profile picture
   const avatarContent = m.img && m.img.trim() !== "" 
     ? `<img src="${m.img}" alt="${m.name}" onerror="this.parentElement.innerHTML='${getInitials(m.name)}'">`
     : getInitials(m.name);
@@ -532,10 +583,8 @@ function makeCard(m) {
   return card;
 }
 
-// Render founder
 grid.appendChild(makeCard(founder));
 
-// Render leaders group box
 const leaderBox = document.createElement('div');
 leaderBox.className = 'leaders-section';
 leaderBox.innerHTML = `<div class="leaders-section-title">Leader</div>`;
@@ -545,7 +594,6 @@ leaders.forEach(m => leaderInner.appendChild(makeCard(m)));
 leaderBox.appendChild(leaderInner);
 grid.appendChild(leaderBox);
 
-// Render members group box
 const memberBox = document.createElement('div');
 memberBox.className = 'leaders-section';
 memberBox.style.borderColor = 'rgba(123,95,255,0.15)';
@@ -561,13 +609,11 @@ function filterMembers() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
   let count = 0;
 
-  // founder
   const founderCard = grid.querySelector('.member-card.founder');
   const founderMatch = founder.name.toLowerCase().includes(q);
   founderCard.classList.toggle('hidden', !founderMatch);
   if (founderMatch) count++;
 
-  // leaders inner cards
   const leaderCards = leaderInner.querySelectorAll('.member-card');
   let leaderVisible = 0;
   leaderCards.forEach(c => {
@@ -577,7 +623,6 @@ function filterMembers() {
   });
   leaderBox.style.display = leaderVisible === 0 ? 'none' : '';
 
-  // regular members
   const memberCards = memberInner.querySelectorAll('.member-card');
   let memberVisible = 0;
   memberCards.forEach(c => {
@@ -593,8 +638,8 @@ function filterMembers() {
 /* =======================================================
    ระบบเสียงเพลงพื้นหลังอัตโนมัติ (YOUTUBE BACKGROUND MUSIC)
    ======================================================= */
-const YOUTUBE_VIDEO_ID = 'wXOdV6bd5VM'; // รหัสเพลงแก๊ง Lopez ฉบับเต็ม
-const MUSIC_VOLUME = 3; // ระดับความดัง 15% (เบา ๆ คลอพื้นหลังกำลังดีครับ)
+const YOUTUBE_VIDEO_ID = 'wXOdV6bd5VM'; 
+const MUSIC_VOLUME = 3; 
 
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -616,14 +661,17 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady(event) {
   event.target.setVolume(MUSIC_VOLUME);
+}
+
+// ฟังก์ชันทำงานเมื่อกดปุ่ม Enter Family
+function enterSite() {
+  // ซ่อนหน้า Welcome overlay แบบเนียน ๆ ด้วย Fade out
+  document.getElementById('enterOverlay').classList.add('fade-out');
   
-  // สร้างตัวดักจับ: เมื่อคนดูคลิกเมาส์ สัมผัสหน้าจอมือถือ หรือพิมพ์ค้นหา บนเว็บเพียง 1 ครั้ง เพลงจะเริ่มเล่นทันที
-  document.body.addEventListener('click', function startMusic() {
-    if (player && typeof player.playVideo === 'function') {
-      player.playVideo();
-      document.body.removeEventListener('click', startMusic); // เล่นแล้วเอาตัวดักจับออก เพลงจะได้ไม่เริ่มใหม่ทุกคลิก
-    }
-  }, { once: true });
+  // สั่งให้เครื่องเล่นเพลงทำงานทันที
+  if (player && typeof player.playVideo === 'function') {
+    player.playVideo();
+  }
 }
 </script>
 </body>
