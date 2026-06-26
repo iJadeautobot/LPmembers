@@ -274,6 +274,8 @@
       background: rgba(255,208,0,0.07);
       border: 1px solid rgba(255,208,0,0.2);
     }
+    
+    /* AVATAR STYLE (รองรับทั้งตัวอักษรและรูปภาพ) */
     .member-avatar {
       width: 44px; height: 44px;
       border-radius: 50%;
@@ -284,7 +286,15 @@
       font-weight: 700;
       color: var(--purple-light);
       font-family: 'Space Mono', monospace;
+      overflow: hidden;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.05);
     }
+    .member-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    
     .member-name {
       font-size: 12px;
       font-weight: 600;
@@ -429,49 +439,50 @@
 <footer><span>FAMILY LOPEZ</span> · 2025</footer>
 
 <script>
-const founder = {n:1, name:"Smith Lopez", role:"founder"};
+// สามารถใส่ URL รูปภาพของทุกคนในคีย์ img: "ลิงก์รูปภาพ" ได้เลยครับ ตัวอย่างเช่น img: "https://example.com/pic.png"
+const founder = {n:1, name:"Smith Lopez", role:"founder", img: ""};
 
 const leaders = [
-  {n:2,name:"Ray Lopez",role:"leader"},
-  {n:3,name:"Alex Lopez",role:"leader"},
-  {n:4,name:"Charlesz Lopez",role:"leader"},
-  {n:5,name:"Cgae Lopez",role:"leader"},
-  {n:6,name:"Joke Lopez",role:"leader"},
-  {n:7,name:"Superballz Lopez",role:"leader"},
-  {n:8,name:"Ez Black",role:"leader"},
-  {n:9,name:"Oneshine Lopez",role:"leader"},
-  {n:10,name:"Finver Lopez",role:"leader"},
-  {n:11,name:"PingPing Lopez",role:"leader"},
-  {n:12,name:"Srifer Lopez",role:"leader"},
+  {n:2,name:"Ray Lopez",role:"leader", img: ""},
+  {n:3,name:"Alex Lopez",role:"leader", img: ""},
+  {n:4,name:"Charlesz Lopez",role:"leader", img: ""},
+  {n:5,name:"Cgae Lopez",role:"leader", img: ""},
+  {n:6,name:"Joke Lopez",role:"leader", img: ""},
+  {n:7,name:"Superballz Lopez",role:"leader", img: ""},
+  {n:8,name:"Ez Black",role:"leader", img: ""},
+  {n:9,name:"Oneshine Lopez",role:"leader", img: ""},
+  {n:10,name:"Finver Lopez",role:"leader", img: ""},
+  {n:11,name:"PingPing Lopez",role:"leader", img: ""},
+  {n:12,name:"Srifer Lopez",role:"leader", img: ""},
 ];
 
 const members = [
-  {n:13,name:"Jaonoo Lopez"},{n:14,name:"Jaylin Lopez"},{n:15,name:"Demi Lopez"},
-  {n:16,name:"Sanson Lopez"},{n:17,name:"Ezekiel Lopez"},{n:18,name:"Koko Lopez"},
-  {n:19,name:"Jade Lopez"},{n:20,name:"Winter Lopez"},{n:21,name:"Jele Lopez"},
-  {n:22,name:"Way Lopez"},{n:23,name:"Reindeer Lopez"},{n:24,name:"BxngCos Lopez"},
-  {n:25,name:"Ashix Lopez"},{n:26,name:"Gieow Lopez"},{n:27,name:"Jaynine Lopez"},
-  {n:28,name:"Loma Lopez"},{n:29,name:"Remie Lopez"},{n:30,name:"Bank Lopez"},
-  {n:31,name:"Wayu Lopez"},{n:32,name:"Noah Lopez"},{n:33,name:"Heartx Lopez"},
-  {n:34,name:"Zohan Lopez"},{n:35,name:"MyMm Lopez"},{n:36,name:"Puxd Lopez"},
-  {n:37,name:"Catcher Lopez"},{n:38,name:"Faye Lopez"},{n:39,name:"Waja Lopez"},
-  {n:40,name:"Nozomi Lopez"},{n:41,name:"Emblem Lopez"},{n:42,name:"Fred Lopez"},
-  {n:43,name:"Luca Lopez"},{n:44,name:"Sayuuri Lopez"},{n:45,name:"Rayleigh Lopez"},
-  {n:46,name:"Cherlyn Lopez"},{n:47,name:"GamGlom Lopez"},{n:48,name:"Snow Lopez"},
-  {n:49,name:"Beary Lopez"},{n:50,name:"Pipo Lopez"},{n:51,name:"HanaNa Lopez"},
-  {n:52,name:"Dampeer Lopez"},{n:53,name:"Josave Lopez"},{n:54,name:"Dida Lopez"},
-  {n:55,name:"ReiJi Lopez"},{n:56,name:"Whitebear Lopez"},{n:57,name:"Munmuang Lopez"},
-  {n:58,name:"Whitewo Lopez"},{n:59,name:"Lee Lopez"},{n:60,name:"Emma Lopez"},
-  {n:61,name:"Saki Lopez"},{n:62,name:"Bingsu Lopez"},{n:63,name:"Skyblue Lopez"},
-  {n:64,name:"Errxr Lopez"},{n:65,name:"Felling Lopez"},{n:66,name:"SaiMhok Lopez"},
-  {n:67,name:"Armuay Lopez"},{n:68,name:"Kenzo Lopez"},{n:69,name:"SoFia Lopez"},
-  {n:70,name:"Circe Lopez"},{n:71,name:"Seiyngsai Lopez"},{n:72,name:"Giselle Lopez"},
-  {n:73,name:"Miguel Lopez"},{n:74,name:"Sinny Lopez"},{n:75,name:"Maraa Lopez"},
-  {n:76,name:"JRs Lopez"},{n:77,name:"Mia Lopez"},{n:78,name:"Loma Lopez"},
-  {n:79,name:"WarnYen Lopez"},{n:80,name:"Natthawut Lopez"},{n:81,name:"Yuta Lopez"},
-  {n:82,name:"Hell Lopez"},{n:83,name:"Somchai Lopez"},{n:84,name:"Suffer Lopez"},
-  {n:85,name:"Kevin Lopez"},{n:86,name:"Nami Lopez"},{n:87,name:"Ruben Lopez"},
-  {n:88,name:"Rose Lopez"},{n:89,name:"C Lopez"}
+  {n:13,name:"Jaonoo Lopez", img: ""},{n:14,name:"Jaylin Lopez", img: ""},{n:15,name:"Demi Lopez", img: ""},
+  {n:16,name:"Sanson Lopez", img: ""},{n:17,name:"Ezekiel Lopez", img: ""},{n:18,name:"Koko Lopez", img: ""},
+  {n:19,name:"Jade Lopez", img: ""},{n:20,name:"Winter Lopez", img: ""},{n:21,name:"Jele Lopez", img: ""},
+  {n:22,name:"Way Lopez", img: ""},{n:23,name:"Reindeer Lopez", img: ""},{n:24,name:"BxngCos Lopez", img: ""},
+  {n:25,name:"Ashix Lopez", img: ""},{n:26,name:"Gieow Lopez", img: ""},{n:27,name:"Jaynine Lopez", img: ""},
+  {n:28,name:"Loma Lopez", img: ""},{n:29,name:"Remie Lopez", img: ""},{n:30,name:"Bank Lopez", img: ""},
+  {n:31,name:"Wayu Lopez", img: ""},{n:32,name:"Noah Lopez", img: ""},{n:33,name:"Heartx Lopez", img: ""},
+  {n:34,name:"Zohan Lopez", img: ""},{n:35,name:"MyMm Lopez", img: ""},{n:36,name:"Puxd Lopez", img: ""},
+  {n:37,name:"Catcher Lopez", img: ""},{n:38,name:"Faye Lopez", img: ""},{n:39,name:"Waja Lopez", img: ""},
+  {n:40,name:"Nozomi Lopez", img: ""},{n:41,name:"Emblem Lopez", img: ""},{n:42,name:"Fred Lopez", img: ""},
+  {n:43,name:"Luca Lopez", img: ""},{n:44,name:"Sayuuri Lopez", img: ""},{n:45,name:"Rayleigh Lopez", img: ""},
+  {n:46,name:"Cherlyn Lopez", img: ""},{n:47,name:"GamGlom Lopez", img: ""},{n:48,name:"Snow Lopez", img: ""},
+  {n:49,name:"Beary Lopez", img: ""},{n:50,name:"Pipo Lopez", img: ""},{n:51,name:"HanaNa Lopez", img: ""},
+  {n:52,name:"Dampeer Lopez", img: ""},{n:53,name:"Josave Lopez", img: ""},{n:54,name:"Dida Lopez", img: ""},
+  {n:55,name:"ReiJi Lopez", img: ""},{n:56,name:"Whitebear Lopez", img: ""},{n:57,name:"Munmuang Lopez", img: ""},
+  {n:58,name:"Whitewo Lopez", img: ""},{n:59,name:"Lee Lopez", img: ""},{n:60,name:"Emma Lopez", img: ""},
+  {n:61,name:"Saki Lopez", img: ""},{n:62,name:"Bingsu Lopez", img: ""},{n:63,name:"Skyblue Lopez", img: ""},
+  {n:64,name:"Errxr Lopez", img: ""},{n:65,name:"Felling Lopez", img: ""},{n:66,name:"SaiMhok Lopez", img: ""},
+  {n:67,name:"Armuay Lopez", img: ""},{n:68,name:"Kenzo Lopez", img: ""},{n:69,name:"SoFia Lopez", img: ""},
+  {n:70,name:"Circe Lopez", img: ""},{n:71,name:"Seiyngsai Lopez", img: ""},{n:72,name:"Giselle Lopez", img: ""},
+  {n:73,name:"Miguel Lopez", img: ""},{n:74,name:"Sinny Lopez", img: ""},{n:75,name:"Maraa Lopez", img: ""},
+  {n:76,name:"JRs Lopez", img: ""},{n:77,name:"Mia Lopez", img: ""},{n:78,name:"Loma Lopez", img: ""},
+  {n:79,name:"WarnYen Lopez", img: ""},{n:80,name:"Natthawut Lopez", img: ""},{n:81,name:"Yuta Lopez", img: ""},
+  {n:82,name:"Hell Lopez", img: ""},{n:83,name:"Somchai Lopez", img: ""},{n:84,name:"Suffer Lopez", img: ""},
+  {n:85,name:"Kevin Lopez", img: ""},{n:86,name:"Nami Lopez", img: ""},{n:87,name:"Ruben Lopez", img: ""},
+  {n:88,name:"Rose Lopez", img: ""},{n:89,name:"C Lopez", img: ""}
 ];
 
 function getInitials(name) {
@@ -495,16 +506,20 @@ function makeCard(m) {
   card.className = 'member-card' + (isFounder ? ' founder' : isLeader ? ' co-leader' : '');
   card.dataset.name = m.name.toLowerCase();
   
-  // นำตัวเลขลำดับ #13 - #89 ออก โดยไม่เขียนอะไรเพิ่มในฝั่งของ Member ทั่วไป
   const badge = isFounder
     ? `<div class="role-badge badge-founder">⭐ FOUNDER</div>`
     : isLeader
     ? `<div class="role-badge badge-leader">👑 LEADER</div>`
-    : ``; // เว้นว่างไว้สำหรับสมาชิกทั่วไป เพื่อไม่ให้แสดงเลขลำดับด้านบน
+    : ``; 
+    
+  // ฟังก์ชันสลับแสดงผล: ถ้ามีรูปใน img ให้ดึงรูปมาแสดง ถ้ายั่งไม่มีให้ใช้ตัวอักษรย่อเหมือนเดิม
+  const avatarContent = m.img && m.img.trim() !== "" 
+    ? `<img src="${m.img}" alt="${m.name}" onerror="this.parentElement.innerHTML='${getInitials(m.name)}'">`
+    : getInitials(m.name);
     
   card.innerHTML = `
     ${badge}
-    <div class="member-avatar">${getInitials(m.name)}</div>
+    <div class="member-avatar">${avatarContent}</div>
     <div class="member-name">${m.name}</div>
     <a class="fb-btn" href="${fbUrl}" target="_blank" rel="noopener">
       <svg width="10" height="10" viewBox="0 0 24 24" fill="#7b5fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
