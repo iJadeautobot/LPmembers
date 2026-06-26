@@ -486,9 +486,14 @@ function getInitials(name) {
 
 const grid = document.getElementById('membersGrid');
 const allSearchable = [founder, ...leaders, ...members];
-
+// Facebook
 function makeCard(m) {
-  const fbUrl = `https://www.facebook.com/search/people/?q=${encodeURIComponent(m.name)}`;
+  const fbLinks = {
+  "Smith Lopez": "https://www.facebook.com/https://www.facebook.com/SmithLopezX",
+  "Ray Lopez": "https://www.facebook.com/https://www.facebook.com/ImRayLopez",
+  "Alex Lopez": "https://www.facebook.com/https://www.facebook.com/profile.php?id=100093201550801",
+};
+const fbUrl = fbLinks[m.name] || `https://www.facebook.com/search/people/?q=${encodeURIComponent(m.name)}`;
   const card = document.createElement('div');
   const isFounder = m.role === 'founder';
   const isLeader = m.role === 'leader';
