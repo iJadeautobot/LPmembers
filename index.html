@@ -495,9 +495,9 @@ function makeCard(m) {
   card.className = 'member-card' + (isFounder ? ' founder' : isLeader ? ' co-leader' : '');
   card.dataset.name = m.name.toLowerCase();
   const badge = isFounder
-    ? `<div class="role-badge badge-founder">⭐ FOUNDER ⭐</div>`
+    ? `<div class="role-badge badge-founder">⭐ FOUNDER</div>`
     : isLeader
-    ? `<div class="role-badge badge-leader">LEADER</div>`
+    ? `<div class="role-badge badge-leader">👑 LEADER</div>`
     : `<div class="member-num">#${String(m.n).padStart(2,'0')}</div>`;
   card.innerHTML = `
     ${badge}
@@ -517,7 +517,7 @@ grid.appendChild(makeCard(founder));
 // Render leaders group box
 const leaderBox = document.createElement('div');
 leaderBox.className = 'leaders-section';
-leaderBox.innerHTML = `<div class="leaders-section-title">👑 Leader 👑</div>`;
+leaderBox.innerHTML = `<div class="leaders-section-title">Leader</div>`;
 const leaderInner = document.createElement('div');
 leaderInner.className = 'leaders-inner';
 leaders.forEach(m => leaderInner.appendChild(makeCard(m)));
@@ -529,7 +529,7 @@ const memberBox = document.createElement('div');
 memberBox.className = 'leaders-section';
 memberBox.style.borderColor = 'rgba(123,95,255,0.15)';
 memberBox.style.background = 'rgba(123,95,255,0.03)';
-memberBox.innerHTML = `<div class="leaders-section-title" style="color:rgba(201,184,255,0.5)">🫂 Members</div>`;
+memberBox.innerHTML = `<div class="leaders-section-title" style="color:rgba(201,184,255,0.5)">Members</div>`;
 const memberInner = document.createElement('div');
 memberInner.className = 'leaders-inner';
 members.forEach(m => memberInner.appendChild(makeCard(m)));
