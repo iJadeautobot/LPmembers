@@ -497,7 +497,7 @@ function makeCard(m) {
   const badge = isFounder
     ? `<div class="role-badge badge-founder">⭐ FOUNDER ⭐</div>`
     : isLeader
-    ? `<div class="role-badge badge-leader">👑 LEADER 👑</div>`
+    ? `<div class="role-badge badge-leader">LEADER</div>`
     : `<div class="member-num">#${String(m.n).padStart(2,'0')}</div>`;
   card.innerHTML = `
     ${badge}
@@ -517,7 +517,7 @@ grid.appendChild(makeCard(founder));
 // Render leaders group box
 const leaderBox = document.createElement('div');
 leaderBox.className = 'leaders-section';
-leaderBox.innerHTML = `<div class="leaders-section-title">Leader</div>`;
+leaderBox.innerHTML = `<div class="leaders-section-title">👑 Leader 👑</div>`;
 const leaderInner = document.createElement('div');
 leaderInner.className = 'leaders-inner';
 leaders.forEach(m => leaderInner.appendChild(makeCard(m)));
