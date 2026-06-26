@@ -218,9 +218,9 @@
     }
     .member-card.founder .member-name { font-size: 16px; }
 
-    /* LEADER & MEMBER GROUP BOXES */
+    /* LEADER GROUP BOX */
     .leaders-section {
-      grid-column: 1 / -1; /* แก้ไขให้ขยายเต็มความกว้างระบบ Grid หลัก */
+      grid-column: 1 / -1;
       background: rgba(255,199,0,0.04);
       border: 1px solid rgba(255,199,0,0.15);
       border-radius: 14px;
@@ -238,7 +238,7 @@
     }
     .leaders-inner {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* ปรับสมดุลขนาดการ์ดในกล่อง */
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 10px;
     }
     .member-card.co-leader {
@@ -273,12 +273,6 @@
       color: rgba(255,208,0,0.7);
       background: rgba(255,208,0,0.07);
       border: 1px solid rgba(255,208,0,0.2);
-    }
-    .member-num {
-      font-size: 10px;
-      color: #555;
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 4px;
     }
     .member-avatar {
       width: 44px; height: 44px;
@@ -377,7 +371,7 @@
 <section class="hero">
   <div class="hero-tag">FAMILY LOPEZ</div>
   <h1 class="hero-title">We Are<br><span>LOPEZ</span></h1>
-  <div class="hero-count">// 89 MEMBERS //</div>
+  <div class="hero-count">// 12 MEMBERS //</div>
 </section>
 
 <div class="divider"></div>
@@ -385,7 +379,7 @@
 <div class="section" id="members">
   <div class="section-label">// members</div>
   <h2 class="section-title">สมาชิกทั้งหมด</h2>
-  <p class="section-desc">89 คนที่เป็นส่วนหนึ่งของ Family Lopez</p>
+  <p class="section-desc">12 คนที่เป็นส่วนหนึ่งของ Family Lopez</p>
 
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -393,7 +387,7 @@
     </svg>
     <input type="text" id="searchInput" placeholder="ค้นหาสมาชิก..." oninput="filterMembers()">
   </div>
-  <div class="result-count" id="resultCount">แสดง 89 / 89 คน</div>
+  <div class="result-count" id="resultCount">แสดง 12 / 12 คน</div>
 
   <div class="members-grid" id="membersGrid"></div>
 </div>
@@ -451,42 +445,13 @@ const leaders = [
   {n:12,name:"Srifer Lopez",role:"leader"},
 ];
 
-const members = [
-  {n:13,name:"Jaonoo Lopez"},{n:14,name:"Jaylin Lopez"},{n:15,name:"Demi Lopez"},
-  {n:16,name:"Sanson Lopez"},{n:17,name:"Ezekiel Lopez"},{n:18,name:"Koko Lopez"},
-  {n:19,name:"Jade Lopez"},{n:20,name:"Winter Lopez"},{n:21,name:"Jele Lopez"},
-  {n:22,name:"Way Lopez"},{n:23,name:"Reindeer Lopez"},{n:24,name:"BxngCos Lopez"},
-  {n:25,name:"Ashix Lopez"},{n:26,name:"Gieow Lopez"},{n:27,name:"Jaynine Lopez"},
-  {n:28,name:"Loma Lopez"},{n:29,name:"Remie Lopez"},{n:30,name:"Bank Lopez"},
-  {n:31,name:"Wayu Lopez"},{n:32,name:"Noah Lopez"},{n:33,name:"Heartx Lopez"},
-  {n:34,name:"Zohan Lopez"},{n:35,name:"MyMm Lopez"},{n:36,name:"Puxd Lopez"},
-  {n:37,name:"Catcher Lopez"},{n:38,name:"Faye Lopez"},{n:39,name:"Waja Lopez"},
-  {n:40,name:"Nozomi Lopez"},{n:41,name:"Emblem Lopez"},{n:42,name:"Fred Lopez"},
-  {n:43,name:"Luca Lopez"},{n:44,name:"Sayuuri Lopez"},{n:45,name:"Rayleigh Lopez"},
-  {n:46,name:"Cherlyn Lopez"},{n:47,name:"GamGlom Lopez"},{n:48,name:"Snow Lopez"},
-  {n:49,name:"Beary Lopez"},{n:50,name:"Pipo Lopez"},{n:51,name:"HanaNa Lopez"},
-  {n:52,name:"Dampeer Lopez"},{n:53,name:"Josave Lopez"},{n:54,name:"Dida Lopez"},
-  {n:55,name:"ReiJi Lopez"},{n:56,name:"Whitebear Lopez"},{n:57,name:"Munmuang Lopez"},
-  {n:58,name:"Whitewo Lopez"},{n:59,name:"Lee Lopez"},{n:60,name:"Emma Lopez"},
-  {n:61,name:"Saki Lopez"},{n:62,name:"Bingsu Lopez"},{n:63,name:"Skyblue Lopez"},
-  {n:64,name:"Errxr Lopez"},{n:65,name:"Felling Lopez"},{n:66,name:"SaiMhok Lopez"},
-  {n:67,name:"Armuay Lopez"},{n:68,name:"Kenzo Lopez"},{n:69,name:"SoFia Lopez"},
-  {n:70,name:"Circe Lopez"},{n:71,name:"Seiyngsai Lopez"},{n:72,name:"Giselle Lopez"},
-  {n:73,name:"Miguel Lopez"},{n:74,name:"Sinny Lopez"},{n:75,name:"Maraa Lopez"},
-  {n:76,name:"JRs Lopez"},{n:77,name:"Mia Lopez"},{n:78,name:"Loma Lopez"},
-  {n:79,name:"WarnYen Lopez"},{n:80,name:"Natthawut Lopez"},{n:81,name:"Yuta Lopez"},
-  {n:82,name:"Hell Lopez"},{n:83,name:"Somchai Lopez"},{n:84,name:"Suffer Lopez"},
-  {n:85,name:"Kevin Lopez"},{n:86,name:"Nami Lopez"},{n:87,name:"Ruben Lopez"},
-  {n:88,name:"Rose Lopez"},{n:89,name:"C Lopez"}
-];
-
 function getInitials(name) {
   const parts = name.trim().split(' ');
   return parts.length >= 2 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.slice(0,2).toUpperCase();
 }
 
 const grid = document.getElementById('membersGrid');
-const allSearchable = [founder, ...leaders, ...members];
+const allSearchable = [founder, ...leaders];
 
 function makeCard(m) {
   const fbLinks = {
@@ -503,9 +468,7 @@ function makeCard(m) {
   
   const badge = isFounder
     ? `<div class="role-badge badge-founder">⭐ FOUNDER</div>`
-    : isLeader
-    ? `<div class="role-badge badge-leader">👑 LEADER</div>`
-    : `<div class="member-num">#${String(m.n).padStart(2,'0')}</div>`;
+    : `<div class="role-badge badge-leader">👑 LEADER</div>`;
     
   card.innerHTML = `
     ${badge}
@@ -532,18 +495,6 @@ leaders.forEach(m => leaderInner.appendChild(makeCard(m)));
 leaderBox.appendChild(leaderInner);
 grid.appendChild(leaderBox);
 
-// Render members group box
-const memberBox = document.createElement('div');
-memberBox.className = 'leaders-section';
-memberBox.style.borderColor = 'rgba(123,95,255,0.15)';
-memberBox.style.background = 'rgba(123,95,255,0.03)';
-memberBox.innerHTML = `<div class="leaders-section-title" style="color:rgba(201,184,255,0.5)">Members</div>`;
-const memberInner = document.createElement('div');
-memberInner.className = 'leaders-inner';
-members.forEach(m => memberInner.appendChild(makeCard(m)));
-memberBox.appendChild(memberInner);
-grid.appendChild(memberBox);
-
 function filterMembers() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
   let count = 0;
@@ -563,16 +514,6 @@ function filterMembers() {
     if (show) { count++; leaderVisible++; }
   });
   leaderBox.style.display = leaderVisible === 0 ? 'none' : '';
-
-  // regular members
-  const memberCards = memberInner.querySelectorAll('.member-card');
-  let memberVisible = 0;
-  memberCards.forEach(c => {
-    const show = c.dataset.name.includes(q);
-    c.classList.toggle('hidden', !show);
-    if (show) { count++; memberVisible++; }
-  });
-  memberBox.style.display = memberVisible === 0 ? 'none' : '';
 
   document.getElementById('resultCount').textContent = `แสดง ${count} / ${allSearchable.length} คน`;
 }
