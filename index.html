@@ -434,7 +434,7 @@
 <section class="hero">
   <div class="hero-tag">FAMILY LOPEZ</div>
   <h1 class="hero-title">We Are<br><span>LOPEZ</span></h1>
-  <div class="hero-count">// 89 MEMBERS //</div>
+  <div class="hero-count">// ${count} MEMBERS //</div>
 </section>
 
 <div class="divider"></div>
@@ -442,7 +442,7 @@
 <div class="section" id="members">
   <div class="section-label">// members</div>
   <h2 class="section-title">สมาชิกทั้งหมด</h2>
-  <p class="section-desc">89 คนที่เป็นส่วนหนึ่งของ Family Lopez</p>
+  <p class="section-desc">${count} คนที่เป็นส่วนหนึ่งของ Family Lopez</p>
 
   <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -450,7 +450,7 @@
     </svg>
     <input type="text" id="searchInput" placeholder="ค้นหาสมาชิก..." oninput="filterMembers()">
   </div>
-  <div class="result-count" id="resultCount">แสดง 89 / 89 คน</div>
+  <div class="result-count" id="resultCount">แสดง ${count} / ${count} คน</div>
 
   <div class="members-grid" id="membersGrid"></div>
 </div>
