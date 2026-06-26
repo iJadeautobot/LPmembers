@@ -492,7 +492,8 @@ function getInitials(name) {
 
 const grid = document.getElementById('membersGrid');
 const allSearchable = [founder, ...leaders, ...members];
-
+  
+// Facebook
 function makeCard(m) {
   const fbLinks = {
     "Smith Lopez": "https://www.facebook.com/SmithLopezX",
@@ -507,12 +508,12 @@ function makeCard(m) {
   card.dataset.name = m.name.toLowerCase();
   
   const badge = isFounder
-    ? `<div class="role-badge badge-founder">⭐ FOUNDER</div>`
+    ? `<div class="role-badge badge-founder">⭐ FOUNDER ⭐</div>`
     : isLeader
     ? `<div class="role-badge badge-leader">👑 LEADER</div>`
     : ``; 
     
-  // ฟังก์ชันสลับแสดงผล: ถ้ามีรูปใน img ให้ดึงรูปมาแสดง ถ้ายั่งไม่มีให้ใช้ตัวอักษรย่อเหมือนเดิม
+  // Profile picture
   const avatarContent = m.img && m.img.trim() !== "" 
     ? `<img src="${m.img}" alt="${m.name}" onerror="this.parentElement.innerHTML='${getInitials(m.name)}'">`
     : getInitials(m.name);
