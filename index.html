@@ -202,7 +202,7 @@
       border-color: rgba(123,95,255,0.4);
       transform: translateY(-2px);
     }
-    .member-card.hidden { display: none; }
+    .member-card.hidden { display: none !important; }
 
     /* FOUNDER */
     .member-card.founder {
@@ -218,31 +218,32 @@
     }
     .member-card.founder .member-name { font-size: 16px; }
 
-    /* LEADER GROUP */
+    /* LEADER & MEMBER GROUP BOXES */
     .leaders-section {
-      grid-column: 1 / -1;
+      grid-column: 1 / -1; /* แก้ไขให้ขยายเต็มความกว้างระบบ Grid หลัก */
       background: rgba(255,199,0,0.04);
       border: 1px solid rgba(255,199,0,0.15);
       border-radius: 14px;
-      padding: 1rem;
+      padding: 1.25rem;
+      margin-bottom: 10px;
     }
     .leaders-section-title {
-      font-size: 10px;
+      font-size: 11px;
       font-family: 'Space Mono', monospace;
       font-weight: 700;
       letter-spacing: 2px;
       color: rgba(255,208,0,0.6);
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
     }
     .leaders-inner {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* ปรับสมดุลขนาดการ์ดในกล่อง */
+      gap: 10px;
     }
     .member-card.co-leader {
       border-color: rgba(255,199,0,0.2);
-      background: rgba(255,208,0,0.04);
+      background: rgba(255,208,0,0.02);
     }
     .member-card.co-leader .member-avatar {
       background: linear-gradient(135deg, #5a4a00, #a07800);
@@ -275,7 +276,7 @@
     }
     .member-num {
       font-size: 10px;
-      color: #333;
+      color: #555;
       font-family: 'Space Mono', monospace;
       margin-bottom: 4px;
     }
@@ -486,24 +487,26 @@ function getInitials(name) {
 
 const grid = document.getElementById('membersGrid');
 const allSearchable = [founder, ...leaders, ...members];
-// Facebook
+
 function makeCard(m) {
   const fbLinks = {
-  "Smith Lopez": "https://www.facebook.com/https://www.facebook.com/SmithLopezX",
-  "Ray Lopez": "https://www.facebook.com/https://www.facebook.com/ImRayLopez",
-  "Alex Lopez": "https://www.facebook.com/https://www.facebook.com/profile.php?id=100093201550801",
-};
-const fbUrl = fbLinks[m.name] || `https://www.facebook.com/search/people/?q=${encodeURIComponent(m.name)}`;
+    "Smith Lopez": "https://www.facebook.com/SmithLopezX",
+    "Ray Lopez": "https://www.facebook.com/ImRayLopez",
+    "Alex Lopez": "https://www.facebook.com/profile.php?id=100093201550801",
+  };
+  const fbUrl = fbLinks[m.name] || `https://www.facebook.com/search/people/?q=${encodeURIComponent(m.name)}`;
   const card = document.createElement('div');
   const isFounder = m.role === 'founder';
   const isLeader = m.role === 'leader';
   card.className = 'member-card' + (isFounder ? ' founder' : isLeader ? ' co-leader' : '');
   card.dataset.name = m.name.toLowerCase();
+  
   const badge = isFounder
     ? `<div class="role-badge badge-founder">⭐ FOUNDER</div>`
     : isLeader
     ? `<div class="role-badge badge-leader">👑 LEADER</div>`
     : `<div class="member-num">#${String(m.n).padStart(2,'0')}</div>`;
+    
   card.innerHTML = `
     ${badge}
     <div class="member-avatar">${getInitials(m.name)}</div>
@@ -542,7 +545,7 @@ memberBox.appendChild(memberInner);
 grid.appendChild(memberBox);
 
 function filterMembers() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
   let count = 0;
 
   // founder
