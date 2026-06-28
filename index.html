@@ -22,7 +22,6 @@
     .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
     .nav-links a:hover{color:var(--purple-light)}
     .hero{text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;inset:0;background-image:url('https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/676590618_1555160719949684_2155220416663153675_n.png?stp=dst-png&cstp=mx2052x800&ctp=s2052x800&_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEjILLBKH7oaBwCMI1CHhZblkoIVz0QPtuWSghXPRA-24l8d_9oApteQjCIBh3g04lP4sIuA8Qtet8geuvd2y7k&_nc_ohc=DxSA5fT5tTEQ7kNvwGdUE0r&_nc_oc=AdpKHxzZhEFOUDnz7DpBC6MHmiX2mcd_0nodWODV-ZvPCkwQwfEXWnayyDHLiot93fA&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=qZPI_bzgrJDG43TBzVIw-g&_nc_ss=7b2a8&oh=00_Af9BNix7KGq2cMWigKGcjrFWlsCGYWU5GVaguo-l8h-YMw&oe=6A44C760');background-size:cover;background-position:center;opacity:.08;pointer-events:none}
     .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,63,255,.10) 0%,rgba(10,10,15,.6) 70%);pointer-events:none}
     .hero-tag{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(123,95,255,.35);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem;font-family:'Space Mono',monospace;position:relative;z-index:1}
     .hero-title{font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1;letter-spacing:-2px;margin-bottom:1rem;position:relative;z-index:1}
@@ -79,9 +78,9 @@
     .social-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .social-icon.fb{background:rgba(24,119,242,.12)}
     .social-icon.discord{background:rgba(88,101,242,.12)}
-    .social-info{flex:1}
-    .social-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
-    .social-handle{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace}
+    .social-info{flex:1;min-width:0}
+    .social-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .social-handle{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .social-arrow{color:#2a2a3a;font-size:16px;transition:color .2s}
     .social-card:hover .social-arrow{color:var(--purple)}
     footer{border-top:1px solid rgba(255,255,255,.04);padding:2rem;text-align:center;font-size:12px;color:#2a2a3a;font-family:'Space Mono',monospace;letter-spacing:1px}
@@ -133,17 +132,8 @@
 <div class="section" id="contact">
   <h2 class="section-title">ติดต่อเรา</h2>
   <p class="section-desc">ตามหาพวกเราได้ทาง Fanpage และ Discord</p>
-  <div class="contact-grid">
-    <a class="social-card fb" href="https://www.facebook.com/lopezimmakillemall" target="_blank" rel="noopener">
-      <div class="social-icon fb"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
-      <div class="social-info"><div class="social-name">Fanpage</div><div class="social-handle">Lopez - I'm a kill 'em all</div></div>
-      <div class="social-arrow">→</div>
-    </a>
-    <a class="social-card discord" href="https://discord.gg/TdyDESPT" target="_blank" rel="noopener">
-      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
-      <div class="social-info"><div class="social-name">𝙇𝙤𝙥𝙚𝙯 𝙁𝙖𝙢𝙞𝙡𝙮</div><div class="social-handle">discord.gg/TdyDESPT</div></div>
-      <div class="social-arrow">→</div>
-    </a>
+  <div class="contact-grid" id="contactContainer">
+    <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>กำลังดึงข้อมูลช่องทางติดต่อ...</div>
   </div>
 </div>
 
@@ -152,27 +142,8 @@
 <div class="section" id="partners">
   <h2 class="section-title">PARTNERS</h2>
   <p class="section-desc">ดิสคอร์ดพาร์ทเนอร์พันธมิตรของเรา</p>
-  <div class="contact-grid">
-    <a class="social-card discord" href="https://discord.gg/UR3gYsfMBb" target="_blank" rel="noopener">
-      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
-      <div class="social-info"><div class="social-name">JARPPA DESIGN</div><div class="social-handle">discord.gg/UR3gYsfMBb</div></div>
-      <div class="social-arrow">→</div>
-    </a>
-    <a class="social-card discord" href="https://discord.gg/qE9dqwFhGK" target="_blank" rel="noopener">
-      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
-      <div class="social-info"><div class="social-name">LUCA STUDIO</div><div class="social-handle">discord.gg/qE9dqwFhGK</div></div>
-      <div class="social-arrow">→</div>
-    </a>
-    <a class="social-card discord" href="https://discord.gg/rRDmnunqXa" target="_blank" rel="noopener">
-      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
-      <div class="social-info"><div class="social-name">W!NTER</div><div class="social-handle">discord.gg/rRDmnunqXa</div></div>
-      <div class="social-arrow">→</div>
-    </a>
-    <a class="social-card discord" href="https://discord.gg/6UrzCN3fVy" target="_blank" rel="noopener">
-      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
-      <div class="social-info"><div class="social-name">CatKhat</div><div class="social-handle">discord.gg/6UrzCN3fVy</div></div>
-      <div class="social-arrow">→</div>
-    </a>
+  <div class="contact-grid" id="partnersContainer">
+    <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>กำลังดึงข้อมูลพาร์ทเนอร์...</div>
   </div>
 </div>
 
@@ -181,14 +152,28 @@
 
 <script>
 const SHEET_ID = '1Pn8ga2UX1otxaLNjDTZNG1OMn2HXCqugGti0EGuMIaI';
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json';
+const REFRESH_MS = 30000; // เรียลไทม์: รีเฟรชทุก 30 วินาที
 
-let allMembers = [];
+function sheetUrl(tab) {
+  const base = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json';
+  return tab ? base + '&sheet=' + encodeURIComponent(tab) + '&t=' + Date.now() : base + '&t=' + Date.now();
+}
+
+async function fetchSheet(tab) {
+  const res = await fetch(sheetUrl(tab));
+  const text = await res.text();
+  const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);?\s*$/);
+  if (!m) throw new Error('Invalid sheet response for ' + (tab||'default'));
+  return JSON.parse(m[1]).table.rows || [];
+}
 
 function getInitials(name) {
   const p = (name||'').trim().split(' ');
   return p.length >= 2 ? (p[0][0]+p[1][0]).toUpperCase() : (name||'??').slice(0,2).toUpperCase();
 }
+
+// ====== MEMBERS ======
+let allMembers = [];
 
 function makeCard(m, extraClass) {
   extraClass = extraClass || '';
@@ -200,7 +185,7 @@ function makeCard(m, extraClass) {
     ? '<div class="role-badge badge-founder">&#11088; FOUNDER &#11088;</div>'
     : isLeader
     ? '<div class="role-badge badge-leader">&#128081; LEADER</div>'
-    : '<div class="member-num"></div>';
+    : '<div class="member-num">#' + String(m.n).padStart(2,'0') + '</div>';
   const avatarInner = m.img
     ? '<img src="' + m.img + '" alt="' + m.name + '" onerror="this.style.display=\'none\'">'
     : initials;
@@ -219,14 +204,11 @@ function makeCard(m, extraClass) {
 async function loadMembers() {
   const container = document.getElementById('membersContainer');
   try {
-    const res = await fetch(SHEET_URL);
-    const text = await res.text();
-    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
-    const rows = json.table.rows;
+    const rows = await fetchSheet();
     let founders = [], leaders = [], members = [];
     let num = 1;
     rows.forEach(function(row) {
-      const c = row.c;
+      const c = row.c || [];
       const name = (c[0] && c[0].v) ? c[0].v.toString().trim() : '';
       const role = (c[1] && c[1].v) ? c[1].v.toString().trim().toLowerCase() : 'member';
       const img  = (c[2] && c[2].v) ? c[2].v.toString().trim() : '';
@@ -238,8 +220,7 @@ async function loadMembers() {
       else members.push(m);
     });
     const az = function(a, b) { return a.name.localeCompare(b.name); };
-    leaders.sort(az);
-    members.sort(az);
+    leaders.sort(az); members.sort(az);
     allMembers = founders.concat(leaders).concat(members);
     const total = allMembers.length;
     document.getElementById('liveCount').textContent = total + ' MEMBERS';
@@ -257,8 +238,7 @@ async function loadMembers() {
       const inner = document.createElement('div');
       inner.className = 'group-inner';
       leaders.forEach(function(m) { inner.appendChild(makeCard(m, 'co-leader')); });
-      box.appendChild(inner);
-      grid.appendChild(box);
+      box.appendChild(inner); grid.appendChild(box);
     }
     if (members.length) {
       const box = document.createElement('div');
@@ -267,11 +247,11 @@ async function loadMembers() {
       const inner = document.createElement('div');
       inner.className = 'group-inner';
       members.forEach(function(m) { inner.appendChild(makeCard(m, '')); });
-      box.appendChild(inner);
-      grid.appendChild(box);
+      box.appendChild(inner); grid.appendChild(box);
     }
     container.innerHTML = '';
     container.appendChild(grid);
+    filterMembers();
   } catch(err) {
     container.innerHTML = '<div class="error-state">&#9888;&#65039; โหลดข้อมูลไม่ได้<br><br>กรุณาตรวจสอบว่า Google Sheets ตั้งค่าเป็น<br><strong>"Anyone with the link &rarr; Viewer"</strong> แล้ว<br><br><small>' + err.message + '</small></div>';
     document.getElementById('liveCount').textContent = 'โหลดไม่ได้';
@@ -279,7 +259,8 @@ async function loadMembers() {
 }
 
 function filterMembers() {
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const input = document.getElementById('searchInput');
+  const q = input ? input.value.toLowerCase().trim() : '';
   const grid = document.getElementById('membersGrid');
   if (!grid) return;
   let count = 0;
@@ -300,6 +281,60 @@ function filterMembers() {
   document.getElementById('resultCount').textContent = 'แสดง ' + count + ' / ' + allMembers.length + ' คน';
 }
 
+// ====== CONTACT & PARTNERS (realtime) ======
+const FB_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
+const DC_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>';
+
+function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];}); }
+
+function detectType(url, hinted) {
+  const t = (hinted||'').toLowerCase();
+  if (t.includes('fb') || t.includes('face')) return 'fb';
+  if (t.includes('dc') || t.includes('disc')) return 'discord';
+  const u = (url||'').toLowerCase();
+  if (u.includes('facebook.com')) return 'fb';
+  if (u.includes('discord')) return 'discord';
+  return 'discord';
+}
+
+function makeSocialCard(item) {
+  const type = detectType(item.url, item.type);
+  const icon = type === 'fb' ? FB_SVG : DC_SVG;
+  const handle = item.handle || (item.url||'').replace(/^https?:\/\//,'').replace(/\/$/,'');
+  return '<a class="social-card ' + type + '" href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener">' +
+    '<div class="social-icon ' + type + '">' + icon + '</div>' +
+    '<div class="social-info"><div class="social-name">' + escapeHtml(item.name) + '</div><div class="social-handle">' + escapeHtml(handle) + '</div></div>' +
+    '<div class="social-arrow">&rarr;</div></a>';
+}
+
+function rowToItem(row) {
+  const c = row.c || [];
+  const val = function(i){ return (c[i] && c[i].v != null) ? c[i].v.toString().trim() : ''; };
+  return { name: val(0), url: val(1), handle: val(2), type: val(3) };
+}
+
+async function loadSocial(tab, containerId, emptyText) {
+  const container = document.getElementById(containerId);
+  try {
+    const rows = await fetchSheet(tab);
+    const items = rows.map(rowToItem).filter(function(x){ return x.name && x.url; });
+    if (!items.length) {
+      container.innerHTML = '<div class="loading-state" style="grid-column:1/-1">' + emptyText + '</div>';
+      return;
+    }
+    container.innerHTML = items.map(makeSocialCard).join('');
+  } catch(err) {
+    container.innerHTML = '<div class="error-state" style="grid-column:1/-1">&#9888;&#65039; โหลดแท็บ "' + tab + '" ไม่ได้<br><small>' + err.message + '</small></div>';
+  }
+}
+
+function refreshAll() {
+  loadMembers();
+  loadSocial('contacts', 'contactContainer', 'ยังไม่มีข้อมูลในแท็บ contacts');
+  loadSocial('partners', 'partnersContainer', 'ยังไม่มีข้อมูลในแท็บ partners');
+}
+
+// ====== YouTube + Enter ======
 var tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
 document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
@@ -316,7 +351,8 @@ function enterSite() {
   if (player && typeof player.playVideo === 'function') player.playVideo();
 }
 
-loadMembers();
+refreshAll();
+setInterval(refreshAll, REFRESH_MS);
 </script>
 </body>
 </html>
