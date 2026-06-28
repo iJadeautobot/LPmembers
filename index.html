@@ -224,7 +224,7 @@ async function loadMembers() {
     allMembers = founders.concat(leaders).concat(members);
     const total = allMembers.length;
     document.getElementById('liveCount').textContent = total + ' MEMBERS';
-    // document.getElementById('memberDesc').textContent = total + ' คนที่เป็นส่วนหนึ่งของ Family Lopez';
+    document.getElementById('memberDesc').textContent = total + ' คนที่เป็นส่วนหนึ่งของ Family Lopez';
     document.getElementById('resultCount').textContent = 'แสดง ' + total + ' / ' + total + ' คน';
     document.getElementById('searchWrap').style.display = '';
     const grid = document.createElement('div');
