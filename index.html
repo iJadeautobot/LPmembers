@@ -151,8 +151,8 @@
 <div id="youtube-player" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none"></div>
 
 <script>
-const SHEET_ID = '1Pn8ga2UX1otxaLNjDTZNG1OMn2HXCqugGti0EGuMIaI';
-const REFRESH_MS = 30000; // เรียลไทม์: รีเฟรชทุก 30 วินาที
+const SHEET_ID = '1Pn8ga2UX1otxaLNjDTZNG1OMn2HXCqugGti0EGuMIaI'; // ลิงค์ sheet
+const REFRESH_MS = 10000; // เรียลไทม์: รีเฟรชทุก 10 วินาที
 
 function sheetUrl(tab) {
   const base = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json';
@@ -341,9 +341,9 @@ document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
-    height: '0', width: '0', videoId: 'wXOdV6bd5VM',
+    height: '0', width: '0', videoId: 'wXOdV6bd5VM', // ลิงค์เพลง
     playerVars: {autoplay:0, controls:0, loop:1, playlist:'wXOdV6bd5VM', rel:0},
-    events: {onReady: function(e){ e.target.setVolume(2); }}
+    events: {onReady: function(e){ e.target.setVolume(3); }} // เพิ่ม ลด เสียง
   });
 }
 function enterSite() {
