@@ -200,6 +200,7 @@ function makeCard(m, extraClass) {
     ? '<div class="role-badge badge-founder">&#11088; FOUNDER &#11088;</div>'
     : isLeader
     ? '<div class="role-badge badge-leader">&#128081; LEADER</div>'
+    : '<div class="member-num">#' + String(m.n).padStart(2,'0') + '</div>';
   const avatarInner = m.img
     ? '<img src="' + m.img + '" alt="' + m.name + '" onerror="this.style.display=\'none\'">'
     : initials;
