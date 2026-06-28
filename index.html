@@ -7,417 +7,89 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --border: #ffffff0d;
-      --purple: #7b5fff;
-      --purple-light: #c9b8ff;
-      --text: #e8e8f0;
-      --muted: #666;
-      --dim: #444;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ==========================================
-       หน้า ENTER SITE (หน้ากดเข้าเว็บเพื่อเปิดเพลง)
-       ========================================== */
-    .enter-overlay {
-      position: fixed;
-      inset: 0;
-      background: #060609;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    .enter-overlay.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-    .enter-btn {
-      background: transparent;
-      border: 2px solid var(--purple);
-      color: #fff;
-      font-family: 'Space Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      padding: 15px 40px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(123,95,255,0.2);
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-    }
-    .enter-btn:hover {
-      background: var(--purple);
-      box-shadow: 0 0 30px rgba(123,95,255,0.6);
-      transform: scale(1.05);
-    }
-    .enter-subtext {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--dim);
-      margin-top: 15px;
-      letter-spacing: 1px;
-    }
-
-    /* NAV */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--purple-light);
-      letter-spacing: 2px;
-    }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--purple-light); }
-
-    /* HERO */
-    .hero {
-      text-align: center;
-      padding: 5rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/676590618_1555160719949684_2155220416663153675_n.png?stp=dst-png&cstp=mx2052x800&ctp=s2052x800&_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEjILLBKH7oaBwCMI1CHhZblkoIVz0QPtuWSghXPRA-24l8d_9oApteQjCIBh3g04lP4sIuA8Qtet8geuvd2y7k&_nc_ohc=DxSA5fT5tTEQ7kNvwGdUE0r&_nc_oc=AdpKHxzZhEFOUDnz7DpBC6MHmiX2mcd_0nodWODV-ZvPCkwQwfEXWnayyDHLiot93fA&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=qZPI_bzgrJDG43TBzVIw-g&_nc_ss=7b2a8&oh=00_Af9BNix7KGq2cMWigKGcjrFWlsCGYWU5GVaguo-l8h-YMw&oe=6A44C760');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.08;
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(108,63,255,0.10) 0%, rgba(10,10,15,0.6) 70%);
-      pointer-events: none;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--purple);
-      border: 1px solid rgba(123,95,255,0.35);
-      padding: 5px 16px;
-      border-radius: 20px;
-      margin-bottom: 1.5rem;
-      font-family: 'Space Mono', monospace;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 700;
-      line-height: 1.0;
-      letter-spacing: -2px;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-title span {
-      background: linear-gradient(135deg, var(--purple-light), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-count {
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      color: #444;
-      letter-spacing: 3px;
-      margin-top: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* DIVIDER */
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-      margin: 0 2rem;
-    }
-
-    /* SECTION */
-    .section {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--purple);
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 0.5rem;
-    }
-    .section-title {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
-    }
-    .section-desc {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 1.75rem;
-    }
-
-    /* SEARCH */
-    .search-wrap { position: relative; margin-bottom: 1rem; }
-    .search-wrap svg {
-      position: absolute; left: 14px; top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-    .search-wrap input {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px 12px 42px;
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .search-wrap input:focus { border-color: rgba(123,95,255,0.4); }
-    .search-wrap input::placeholder { color: #3a3a4a; }
-    .result-count {
-      font-size: 12px;
-      color: #3a3a4a;
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 1.25rem;
-    }
-
-    /* MEMBERS GRID */
-    .members-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 10px;
-    }
-    .member-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.1rem 0.75rem;
-      text-align: center;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .member-card:hover {
-      border-color: rgba(123,95,255,0.4);
-      transform: translateY(-2px);
-    }
-    .member-card.hidden { display: none !important; }
-
-    /* FOUNDER */
-    .member-card.founder {
-      border-color: rgba(255,199,0,0.45);
-      background: linear-gradient(145deg, #111118, #1a1608);
-      grid-column: 1 / -1;
-    }
-    .member-card.founder .member-avatar {
-      width: 64px; height: 64px;
-      font-size: 20px;
-      background: linear-gradient(135deg, #a07800, #ffd000);
-      color: #1a1200;
-    }
-    .member-card.founder .member-name { font-size: 16px; }
-
-    /* LEADER & MEMBER GROUP BOXES */
-    .leaders-section {
-      grid-column: 1 / -1;
-      background: rgba(255,199,0,0.04);
-      border: 1px solid rgba(255,199,0,0.15);
-      border-radius: 14px;
-      padding: 1.25rem;
-      margin-bottom: 10px;
-    }
-    .leaders-section-title {
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: rgba(255,208,0,0.6);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .leaders-inner {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 10px;
-    }
-    .member-card.co-leader {
-      border-color: rgba(255,199,0,0.2);
-      background: rgba(255,208,0,0.02);
-    }
-    .member-card.co-leader .member-avatar {
-      background: linear-gradient(135deg, #5a4a00, #a07800);
-      color: #ffd000;
-    }
-    .member-card.co-leader:hover { border-color: rgba(255,199,0,0.45); }
-
-    /* BADGE */
-    .role-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      font-family: 'Space Mono', monospace;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-    }
-    .badge-founder {
-      color: #ffd000;
-      background: rgba(255,208,0,0.12);
-      border: 1px solid rgba(255,208,0,0.35);
-    }
-    .badge-leader {
-      color: rgba(255,208,0,0.7);
-      background: rgba(255,208,0,0.07);
-      border: 1px solid rgba(255,208,0,0.2);
-    }
-    
-    /* AVATAR STYLE */
-    .member-avatar {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3a2a7a, #6a3fff);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 0.6rem;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--purple-light);
-      font-family: 'Space Mono', monospace;
-      overflow: hidden;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.05);
-    }
-    .member-avatar img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    
-    .member-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .fb-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      color: var(--purple);
-      border: 1px solid rgba(123,95,255,0.25);
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-family: 'Space Mono', monospace;
-      transition: background 0.2s;
-    }
-    .fb-btn:hover { background: rgba(123,95,255,0.12); }
-
-    /* CONTACT */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 500px) {
-      .contact-grid { grid-template-columns: 1fr; }
-      .members-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-    }
-    .social-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .social-card:hover { transform: translateY(-2px); }
-    .social-card.fb:hover { border-color: rgba(24,119,242,0.4); }
-    .social-card.discord:hover { border-color: rgba(88,101,242,0.4); }
-    .social-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .social-icon.fb { background: rgba(24,119,242,0.12); }
-    .social-icon.discord { background: rgba(88,101,242,0.12); }
-    .social-info { flex: 1; }
-    .social-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-    .social-handle { font-size: 11px; color: var(--dim); font-family: 'Space Mono', monospace; }
-    .social-arrow { color: #2a2a3a; font-size: 16px; transition: color 0.2s; }
-    .social-card:hover .social-arrow { color: var(--purple); }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.04);
-      padding: 2rem;
-      text-align: center;
-      font-size: 12px;
-      color: #2a2a3a;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-    }
-    footer span { color: var(--purple); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0a0a0f;--surface:#111118;--border:#ffffff0d;--purple:#7b5fff;--purple-light:#c9b8ff;--text:#e8e8f0;--muted:#666;--dim:#444}
+    html{scroll-behavior:smooth}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    .enter-overlay{position:fixed;inset:0;background:#060609;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity .5s,visibility .5s}
+    .enter-overlay.fade-out{opacity:0;visibility:hidden;pointer-events:none}
+    .enter-btn{background:transparent;border:2px solid var(--purple);color:#fff;font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:4px;padding:15px 40px;border-radius:30px;cursor:pointer;box-shadow:0 0 15px rgba(123,95,255,.2);transition:all .3s;text-transform:uppercase}
+    .enter-btn:hover{background:var(--purple);box-shadow:0 0 30px rgba(123,95,255,.6);transform:scale(1.05)}
+    .enter-subtext{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);margin-top:15px;letter-spacing:1px}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 2rem;border-bottom:1px solid var(--border);background:rgba(10,10,15,.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+    .nav-logo{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--purple-light);letter-spacing:2px}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--purple-light)}
+    .hero{text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background-image:url('https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/676590618_1555160719949684_2155220416663153675_n.png?stp=dst-png&cstp=mx2052x800&ctp=s2052x800&_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEjILLBKH7oaBwCMI1CHhZblkoIVz0QPtuWSghXPRA-24l8d_9oApteQjCIBh3g04lP4sIuA8Qtet8geuvd2y7k&_nc_ohc=DxSA5fT5tTEQ7kNvwGdUE0r&_nc_oc=AdpKHxzZhEFOUDnz7DpBC6MHmiX2mcd_0nodWODV-ZvPCkwQwfEXWnayyDHLiot93fA&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=qZPI_bzgrJDG43TBzVIw-g&_nc_ss=7b2a8&oh=00_Af9BNix7KGq2cMWigKGcjrFWlsCGYWU5GVaguo-l8h-YMw&oe=6A44C760');background-size:cover;background-position:center;opacity:.08;pointer-events:none}
+    .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,63,255,.10) 0%,rgba(10,10,15,.6) 70%);pointer-events:none}
+    .hero-tag{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(123,95,255,.35);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem;font-family:'Space Mono',monospace;position:relative;z-index:1}
+    .hero-title{font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1;letter-spacing:-2px;margin-bottom:1rem;position:relative;z-index:1}
+    .hero-title span{background:linear-gradient(135deg,var(--purple-light),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .live-counter{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;background:rgba(123,95,255,.08);border:1px solid rgba(123,95,255,.2);border-radius:30px;padding:8px 20px;margin-top:1rem;font-family:'Space Mono',monospace;font-size:13px;color:var(--purple-light)}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:#4cff91;animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent);margin:0 2rem}
+    .section{padding:4rem 2rem;max-width:1000px;margin:0 auto}
+    .section-title{font-size:28px;font-weight:700;margin-bottom:.5rem;letter-spacing:-.5px}
+    .section-desc{color:var(--muted);font-size:14px;margin-bottom:1.75rem}
+    .loading-state{text-align:center;padding:3rem;color:var(--muted);font-family:'Space Mono',monospace;font-size:13px}
+    .loading-spinner{width:30px;height:30px;border:2px solid rgba(123,95,255,.2);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-state{text-align:center;padding:2rem;color:#ff6b6b;font-family:'Space Mono',monospace;font-size:12px;border:1px solid rgba(255,107,107,.2);border-radius:12px;background:rgba(255,107,107,.05)}
+    .search-wrap{position:relative;margin-bottom:1rem}
+    .search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none}
+    .search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px 12px 42px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+    .search-wrap input:focus{border-color:rgba(123,95,255,.4)}
+    .search-wrap input::placeholder{color:#3a3a4a}
+    .result-count{font-size:12px;color:#3a3a4a;font-family:'Space Mono',monospace;margin-bottom:1.25rem}
+    .members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+    .member-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem .75rem;text-align:center;transition:border-color .2s,transform .15s}
+    .member-card:hover{border-color:rgba(123,95,255,.4);transform:translateY(-2px)}
+    .member-card.hidden{display:none}
+    .member-card.founder{border-color:rgba(255,199,0,.45);background:linear-gradient(145deg,#111118,#1a1608);grid-column:1/-1}
+    .member-card.founder .member-avatar{width:64px;height:64px;font-size:20px;background:linear-gradient(135deg,#a07800,#ffd000);color:#1a1200}
+    .member-card.founder .member-name{font-size:16px}
+    .group-section{grid-column:1/-1;border-radius:14px;padding:1rem}
+    .group-section.leaders{background:rgba(255,199,0,.04);border:1px solid rgba(255,199,0,.15)}
+    .group-section.members-group{background:rgba(123,95,255,.03);border:1px solid rgba(123,95,255,.15)}
+    .group-title{font-size:10px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.75rem}
+    .group-section.leaders .group-title{color:rgba(255,208,0,.6)}
+    .group-section.members-group .group-title{color:rgba(201,184,255,.5)}
+    .group-inner{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+    .member-card.co-leader{border-color:rgba(255,199,0,.2);background:rgba(255,208,0,.02)}
+    .member-card.co-leader .member-avatar{background:linear-gradient(135deg,#5a4a00,#a07800);color:#ffd000}
+    .member-card.co-leader:hover{border-color:rgba(255,199,0,.45)}
+    .role-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+    .badge-founder{color:#ffd000;background:rgba(255,208,0,.12);border:1px solid rgba(255,208,0,.35)}
+    .badge-leader{color:rgba(255,208,0,.7);background:rgba(255,208,0,.07);border:1px solid rgba(255,208,0,.2)}
+    .member-num{font-size:10px;color:#333;font-family:'Space Mono',monospace;margin-bottom:4px}
+    .member-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#3a2a7a,#6a3fff);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem;font-size:14px;font-weight:700;color:var(--purple-light);font-family:'Space Mono',monospace;overflow:hidden;border:2px solid rgba(255,255,255,.05)}
+    .member-avatar img{width:100%;height:100%;object-fit:cover}
+    .member-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.3}
+    .fb-btn{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--purple);border:1px solid rgba(123,95,255,.25);padding:4px 10px;border-radius:20px;text-decoration:none;font-family:'Space Mono',monospace;transition:background .2s}
+    .fb-btn:hover{background:rgba(123,95,255,.12)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:500px){.contact-grid{grid-template-columns:1fr}.members-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}}
+    .social-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;text-decoration:none;transition:border-color .2s,transform .15s}
+    .social-card:hover{transform:translateY(-2px)}
+    .social-card.fb:hover{border-color:rgba(24,119,242,.4)}
+    .social-card.discord:hover{border-color:rgba(88,101,242,.4)}
+    .social-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .social-icon.fb{background:rgba(24,119,242,.12)}
+    .social-icon.discord{background:rgba(88,101,242,.12)}
+    .social-info{flex:1}
+    .social-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+    .social-handle{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace}
+    .social-arrow{color:#2a2a3a;font-size:16px;transition:color .2s}
+    .social-card:hover .social-arrow{color:var(--purple)}
+    footer{border-top:1px solid rgba(255,255,255,.04);padding:2rem;text-align:center;font-size:12px;color:#2a2a3a;font-family:'Space Mono',monospace;letter-spacing:1px}
+    footer span{color:var(--purple)}
   </style>
 </head>
 <body>
 
-<!-- บล็อกหน้า Welcome (นับเป็นการตอบสนอง 1 ครั้งเพื่อบังคับให้เบราว์เซอร์เปิดเพลง) -->
 <div class="enter-overlay" id="enterOverlay">
   <button class="enter-btn" onclick="enterSite()">Enter TO MEMBERS SITE</button>
   <div class="enter-subtext">// LOPEZ IM A KILL'EM ALL //</div>
@@ -435,446 +107,216 @@
 <section class="hero">
   <div class="hero-tag">FAMILY LOPEZ</div>
   <h1 class="hero-title">We Are<br><span>LOPEZ</span></h1>
+  <div class="live-counter">
+    <div class="live-dot"></div>
+    <span id="liveCount">กำลังโหลด...</span>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <div class="section" id="members">
   <h2 class="section-title">สมาชิกทั้งหมด</h2>
-  <p class="section-desc">84 คนที่เป็นส่วนหนึ่งของ Family Lopez</p>
-
-  <div class="search-wrap">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
+  <p class="section-desc" id="memberDesc">กำลังโหลดข้อมูลจาก Google Sheets...</p>
+  <div class="search-wrap" id="searchWrap" style="display:none">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="searchInput" placeholder="ค้นหาสมาชิก..." oninput="filterMembers()">
   </div>
-  <div class="result-count" id="resultCount">แสดง 84 / 84 คน</div>
-
-  <div class="members-grid" id="membersGrid"></div>
+  <div class="result-count" id="resultCount"></div>
+  <div id="membersContainer">
+    <div class="loading-state"><div class="loading-spinner"></div>กำลังดึงข้อมูลสมาชิก...</div>
+  </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- SECTION: CONTACT US (ติดต่อเรา) -->
 <div class="section" id="contact">
   <h2 class="section-title">ติดต่อเรา</h2>
   <p class="section-desc">ตามหาพวกเราได้ทาง Fanpage และ Discord</p>
   <div class="contact-grid">
-    
-    <!-- Facebook Fanpage -->
     <a class="social-card fb" href="https://www.facebook.com/lopezimmakillemall" target="_blank" rel="noopener">
-      <div class="social-icon fb">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-        </svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">Fanpage</div>
-        <div class="social-handle">Lopez - I'm a kill 'em all</div>
-      </div>
+      <div class="social-icon fb"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+      <div class="social-info"><div class="social-name">Fanpage</div><div class="social-handle">Lopez - I'm a kill 'em all</div></div>
       <div class="social-arrow">→</div>
     </a>
-
-    <!-- Discord ของตัวเอง (Lopez Family) -->
     <a class="social-card discord" href="https://discord.gg/TdyDESPT" target="_blank" rel="noopener">
-      <div class="social-icon discord">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-        </svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">𝙇𝙤𝙥𝙚𝙯 𝙁𝙖𝙢𝙞𝙡𝙮</div>
-        <div class="social-handle">https://discord.gg/TdyDESPT</div>
-      </div>
+      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
+      <div class="social-info"><div class="social-name">𝙇𝙤𝙥𝙚𝙯 𝙁𝙖𝙢𝙞𝙡𝙮</div><div class="social-handle">discord.gg/TdyDESPT</div></div>
       <div class="social-arrow">→</div>
     </a>
-
   </div>
 </div>
-<hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.08); margin-top: -20px; margin-bottom: 20px;">
-<!-- SECTION: PARTNER (พาร์ทเนอร์) -->
+
+<hr style="border:0;height:1px;background:rgba(255,255,255,.08);margin:0 2rem">
+
 <div class="section" id="partners">
   <h2 class="section-title">PARTNERS</h2>
   <p class="section-desc">ดิสคอร์ดพาร์ทเนอร์พันธมิตรของเรา</p>
   <div class="contact-grid">
-    
-    <!-- Partner 1: JARPPA DESIGN -->
     <a class="social-card discord" href="https://discord.gg/UR3gYsfMBb" target="_blank" rel="noopener">
-      <div class="social-icon discord">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-        </svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">JARPPA DESIGN</div>
-        <div class="social-handle">discord.gg/UR3gYsfMBb</div>
-      </div>
+      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
+      <div class="social-info"><div class="social-name">JARPPA DESIGN</div><div class="social-handle">discord.gg/UR3gYsfMBb</div></div>
       <div class="social-arrow">→</div>
     </a>
-
-    <!-- Partner 2: Luca Studio -->
-    <a class="social-card discord" href="discord.gg/qE9dqwFhGK" target="_blank" rel="noopener">
-      <div class="social-icon discord">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-        </svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">LUCA STUDIO</div>
-        <div class="social-handle">discord.gg/qE9dqwFhGK</div>
-      </div>
+    <a class="social-card discord" href="https://discord.gg/qE9dqwFhGK" target="_blank" rel="noopener">
+      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
+      <div class="social-info"><div class="social-name">LUCA STUDIO</div><div class="social-handle">discord.gg/qE9dqwFhGK</div></div>
       <div class="social-arrow">→</div>
     </a>
-
-    <!-- Partner 3: W1NTER -->
     <a class="social-card discord" href="https://discord.gg/rRDmnunqXa" target="_blank" rel="noopener">
-      <div class="social-icon discord">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-        </svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">W!NTER</div>
-        <div class="social-handle">https://discord.gg/rRDmnunqXa</div>
-      </div>
+      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
+      <div class="social-info"><div class="social-name">W!NTER</div><div class="social-handle">discord.gg/rRDmnunqXa</div></div>
       <div class="social-arrow">→</div>
     </a>
-    
-    <!-- Partner 4: CatKhat -->
     <a class="social-card discord" href="https://discord.gg/6UrzCN3fVy" target="_blank" rel="noopener">
-      <div class="social-icon discord">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
-          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-        </svg>
-      </div>
-      <div class="social-info">
-        <div class="social-name">CatKhat</div>
-        <div class="social-handle">https://discord.gg/6UrzCN3fVy</div>
-      </div>
+      <div class="social-icon discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div>
+      <div class="social-info"><div class="social-name">CatKhat</div><div class="social-handle">discord.gg/6UrzCN3fVy</div></div>
       <div class="social-arrow">→</div>
     </a>
-
   </div>
 </div>
 
 <footer><span>FAMILY LOPEZ</span> · 2026</footer>
-
-<!-- เครื่องเล่นวิดีโอ YouTube ซ่อนไว้ใต้ดิน -->
-<div id="youtube-player" style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"></div>
+<div id="youtube-player" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none"></div>
 
 <script>
-const founder = {n:1, name:"Smith Lopez", role:"founder", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/701212991_1001260672859306_733674881705667292_n.jpg?stp=dst-jpg_tt6&cstp=mx1023x1537&ctp=s1023x1537&_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEEC5rV-xixQgNS-wsNBzhGpRGlZ4zmu6GlEaVnjOa7oQlLoYVvDHsUWkWDyOnUtUn_5IHt_ahGC7Y7MnkctayH&_nc_ohc=zwUmtpASjk4Q7kNvwF4PMnZ&_nc_oc=AdrOHO9eJIzWwR9SdMGhYjQsPkP_GkA4zCTArwKosIzMjTFbvkKQxYI6AYq_nvqZOQ4&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=5uMsTd-ytBKSzeOLnmu1fQ&_nc_ss=7b2a8&oh=00_Af_pgGOKy60MZJi6-jiM3UAhZ3Nop7CQTwglN2dmNDKOmg&oe=6A44ACAB"};
+const SHEET_ID = '1Pn8ga2UX1otxaLNjDTZNG1OMn2HXCqugGti0EGuMIaI';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json';
 
-const leaders = [
-  {n:2,  name:"Alex Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/649667366_829077966875581_8433333201935305340_n.jpg?stp=dst-jpg_tt6&cstp=mx1352x1364&ctp=s1352x1364&_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFkaaRmFiDOoYJMXBc9e8mf9SieydLp9qL1KJ7J0un2on7ivwwEi85p5hoqpJUSgu5RVANtdtVWCE1oGBtSqAqM&_nc_ohc=vJ9fxuzcsJ0Q7kNvwGz0o43&_nc_oc=AdqT-yQ5h72lTUUR4d_TA1hMVjYLNd2QBSNDRKL_wNEe0B66bQyFPQo94cfkTcu68CQ&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=4ll1M690GThaV39PAMq6jA&_nc_ss=7b2a8&oh=00_Af_Yn_dtiRC40pDlhIIhEMHixovUhiR_bGrPDvALm4wRPg&oe=6A44D0FF"},
-  {n:3, name:"Bank Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/559072389_821162663621938_3922866411640308407_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=107&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGz90DYx6Udj9452kFiOR4fPwDsu5zEOAU_AOy7nMQ4Bf3Kwv2fDBhaINgRFn5-alPP2ikFgpv7bhgZ8DkwcnOB&_nc_ohc=bsL_C5AzdjsQ7kNvwHJ6oY_&_nc_oc=AdrP4rJMCjkWUc-JgOFG44Upugf3xSL5pu_9IqWylaTvCIQch1TIersbm5eUuKFgHjs&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=aLYv1GLncpb8nvPCaXGTUA&_nc_ss=7b2a8&oh=00_Af9OrHmLkEZKTrQJ-OkHJR1yazxeBpBf_NnCW87yJZdfcw&oe=6A44BDB8"},
-  {n:4,  name:"Cgae Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/599939822_868923442412881_3711860999200082584_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1536&ctp=s1024x1536&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeH2-NbQsF8Hyi8gms55F1oZy9Xvnccu9DvL1e-dxy70O2DaOqiERpavHsyilQZ4Vf1lqemczAfWrkbmgOna0Kpl&_nc_ohc=e4-6MblaBAIQ7kNvwELYyfj&_nc_oc=Adol2vL8ZaAPsmmcmn04l1PS9QtSAXGoXGaoPB3UWt-3Y5dmqI9ekV_sPrkkuUt9vGM&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=A2rx-i182xN0Av4iYwjGMA&_nc_ss=7b2a8&oh=00_Af-wTzRjQPRz7Xu1rKfigQDc65eC60YA9bWkrKyI4gYgyA&oe=6A44C18B"},
-  {n:5,  name:"Charlesz Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/729754807_1330326009307796_7232462926292667159_n.jpg?stp=dst-jpg_tt6&cstp=mx1054x1044&ctp=s1054x1044&_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEFIcYgDAoYqW_DM8X4NUdWJPDtw_mQ2qUk8O3D-ZDapYSQ_MBx9LntTBt4uo04yoWNn7yk35yfVlrRx9LUWvYq&_nc_ohc=SG6H5YcixFgQ7kNvwEROPyg&_nc_oc=Ado-uDe-gsMDrwgZxbS7mzFPc9G6RnvSxib1o6hTSyxthym1smMonKCnjOrwP7d8Sxk&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=B9FmvPoiSJ1kF_23_3FDWQ&_nc_ss=7b2a8&oh=00_Af9FiIFQ8XL9WHcPjhURH3OfQcQAvc71WvUqzlA3RjJUrA&oe=6A44C814"},
-  {n:6,  name:"Ez Black", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/475858577_1152646263231136_6871034920932057669_n.jpg?stp=c564.0.1080.1080a_dst-jpg_tt6&cstp=mx1080x1080&ctp=s200x200&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeEuOp_Q4yLX-Os5xJ-RE7DQ3dnhrYltzYnd2eGtiW3NicuFLVHZftC1hi1a6AAUfqsB3BRjN-3Agp7WXVauia7b&_nc_ohc=GAq1Di8fbfEQ7kNvwH-JdMc&_nc_oc=AdokdAhbnW8NsP0FPBPvBzUxrNBFTQPbZkT-kBInySbEH9fv6DMbCMX8y1-NqFytvjQ&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=DVIUKAVH0ZjV71It_wxu9g&_nc_ss=7b2a8&oh=00_Af-Ujnvbe6PsN1uSp5CPDT2TUHQq_5PmkYMubwNiG4fDoA&oe=6A44D96C"},
-  {n:7, name:"Finver Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/655970791_1497008698803713_8865515810781765687_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeFvpyc3gKY6vPmud-9ds9N2tG3G0dTrD6e0bcbR1OsPpw-oabECfai5oZMhl2e9T_0LMYBrixr84q6zpCVV8aGz&_nc_ohc=C0L3Zlh3m4gQ7kNvwHtA_Kz&_nc_oc=Adq2ro9KghVYEwnUMTkrMtug3_TcR9HOsi1R47uP9jNQhFknwMvQ5zY_iMNtsugg81s&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=yOaJfbRx_OJ0Co79kyjb_Q&_nc_ss=7b2a8&oh=00_Af9X0JEF4jo1u6PNF3ZjX4Z0ofayTKPIkC0WZs7ydJ83Sg&oe=6A449C5C"},
-  {n:8,  name:"Joke Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/481001313_622099277386749_2305160538322051378_n.jpg?stp=c98.0.1828.1829a_dst-jpg_tt6&cstp=mx1828x1829&ctp=s200x200&_nc_cat=108&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeEA60G_d45ZlXWg-XqL3-9bUEg3aOQiGqBQSDdo5CIaoCHLGOZGfluYsgOuwJHzOHW2tJ85C0PBePVM0HfwaSFJ&_nc_ohc=hbi2qIdWWwwQ7kNvwFaeJCm&_nc_oc=Adqo2akTMiWIfjwAE30cTBn00gvlK-0mgwIkIRvQaNnr7MajImPKdHBnJg5Iu2Csl0E&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=3YgNRuVkVIDNUsxfqpRs0A&_nc_ss=7b2a8&oh=00_Af9_PBgqxeS17G5THl_fP9Fd2n_2A28Eg3WO8aocPkbHpQ&oe=6A44BC74"},
-  {n:9,  name:"Oneshine Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/480776411_1149149450251303_7551316243018968786_n.jpg?stp=dst-jpg_tt6&cstp=mx1179x1180&ctp=s200x200&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeEljcbKAhwtCft6CSN7H2sITTYjV3s5_7dNNiNXezn_t7oD4U9BAQWQ-PH2Jbz5PKCwR7C1SK3RU5WAxtx7CG-s&_nc_ohc=KpF9X9HukwcQ7kNvwHyt6xb&_nc_oc=AdrJApeiEc17yqYeh9WbjipTXv8Fyr4dfwOmWgDJTl0lQTHxJkNK__cvFet57Gnne44&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=SwdSDlYnEK6KAuP6I53RPQ&_nc_ss=7b2a8&oh=00_Af_tX6tzxjfME7flgrJT4GrKtNo9KzVxjNhS054g8qTtbQ&oe=6A44A301"},
-  {n:10, name:"PingPing Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/654436860_1333848995220251_5642235120766382376_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHYsclOi4fZblx2bKt3Zl_7FxGTr7SGurEXEZOvtIa6sSNHkdrPzaqEC1Bv9XVJWbGu1cP_Y0GwGTXWMCv_Qnj8&_nc_ohc=3Ovu_fuUAc4Q7kNvwG3UY54&_nc_oc=AdrUXygzRK7H6Qe_Uvlhm3FtfcrtHavKMbPAeliMOqzWSlYipiaT63OwvuscYtZVYig&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=XQlqT60jad3gOHhf3MYNrg&_nc_ss=7b2a8&oh=00_Af9MeQdVZ2XzeSbnhL-GhIAmobMPU18M-Xhff-ObwdjpPA&oe=6A44CDCA"},
-  {n:11,  name:"Ray Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/701658356_2545711969218859_2066118164712183073_n.jpg?stp=dst-jpg_tt6&cstp=mx1122x1122&ctp=s1122x1122&_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHrxOIqX6G-0Qv81fu9dV5Y0syFNue-CbnSzIU2574JuSjVmMODYNbAXdAiakpQenZ30a9yRFmfndG6g83gxff0&_nc_ohc=mh53XQ_u2pEQ7kNvwGT3gbi&_nc_oc=AdoBNXb5oMdnEgAhG6n-F-txW1MlSaXmlsQNE26KRgp4ADfYXAjFPYWaiL5s969LtEc&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=hi5Fe_ECv4KAuJlU6fE-yg&_nc_ss=7b2a8&oh=00_Af_AqMV99KO3ralUIrmg6c-Y_iFZtx6R65VxAKrnwFDM0g&oe=6A44CD1F"},
-  {n:12, name:"Srifer Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/717139538_122183144504752411_8041550124017764320_n.jpg?stp=dst-jpg_tt6&cstp=mx1201x1201&ctp=s1201x1201&_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFNexLi20xQC7AbDBMBPkua9R8Oc2TETx31Hw5zZMRPHSARYkJblJeAH_sLbRnto4FytyISVRVZjhRiFd9NruBO&_nc_ohc=PgI94te6pkkQ7kNvwG9Dyvb&_nc_oc=AdoYTdi-eX3uIIStx5EQRYvT-cHafLHKtLnyCVLs2yDHZkxt0B9_IhzwybAb1ZshNYE&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=zKl3vLf6gSFMtkOXUDXy-A&_nc_ss=7b2a8&oh=00_Af83XAnB6iqA7lt_W1B01H-4j7iccsJmCzVyVrdfKLW18A&oe=6A44BB5A"},
-  {n:13,  name:"Superballz Lopez", role:"leader", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/335456615_891639392091177_8706353852831326442_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeF5VSzpnoeTASEkbCf1dWiEkebU4xXW_COR5tTjFdb8I5yhaRDe6RF-cMKPrSuAg5blm6t5761YLoT0nDD-b0te&_nc_ohc=t5bqBmChd68Q7kNvwG9_3YS&_nc_oc=AdpZnFR-oFkaUIA2ejUUxuUveo6u3wq94wctibeDV8SLxOTxGHv0gTl6LZmBT5WT4Ys&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=-1leJ_5MAyiBuBI22JFWbg&_nc_ss=7b2a8&oh=00_Af9-J61MulLGSge8vhwdYwBeIgGfoAO4Ed5GUnBlQ28Yaw&oe=6A44BF58"}
-];
+let allMembers = [];
 
-const members = [
-  {n:14, name:"Armuay Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/687490844_1498987675235986_5117930426836245789_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGvbphsrtFYEW98T5eo0uAsNTyzwVW3vio1PLPBVbe-KpgQjdmBWeAgEjBvkGqMR1tMw1nvw5-kRLuwKul1w0w_&_nc_ohc=Em1GOD3i99wQ7kNvwG8xFke&_nc_oc=Adrl5a2WQvTazBmRqUz4lBrlL6t-WDLSa-2sdt5D8x8yszI1jb4EmgmUQ_IVPfN1ZdY&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=oOFUJ5nwNPXTK1BtWLyQ4w&_nc_ss=7b2a8&oh=00_Af9sHs6w8Os0WjuQfo2OG9T4XzajdwDDidiRaFIpvpBMng&oe=6A44AF74"},
-  {n:15, name:"Ashix Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/669843006_1498514608638066_8649322503113028289_n.jpg?stp=dst-jpg_tt6&cstp=mx828x828&ctp=s828x828&_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeF0R8V_zY6UBwkyIgzvqu-xIKc_UWt6bIogpz9Ra3psiiEJFanJr5lQg4s08DogObBqGDaXmer1XaBV_JqWBKfX&_nc_ohc=4G8pGWkeEiwQ7kNvwGSKBOf&_nc_oc=AdoJurBkxBDB-deGbjVQZ0uTDodLjTYCjh_h_hejXtQMDfI0YhTrXp_clGikmH0mpGk&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=3xtB9wtDhj-wkj8y_v4GCw&_nc_ss=7b2a8&oh=00_Af-PY_UtrQW2jJP0OhdVQGyksI4oDtNBvW9Q6FpSeY-2cw&oe=6A44DE39"},
-  {n:16, name:"Beary Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/449475511_463230463328398_3749792168393634211_n.jpg?stp=c205.0.1638.1638a_dst-jpg_tt6&cstp=mx1638x1638&ctp=s200x200&_nc_cat=103&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFYf0YJGWyx_kW6M49HX1T4i96Ro8Fzr2KL3pGjwXOvYgJ5J1cT8hxJeu04dcsRfEMugcpj6rRFzLsBhRhy-Uh3&_nc_ohc=269e9cgjp6gQ7kNvwHZxC4w&_nc_oc=Adq6S_eJI6SPO2ckd_T9uCE5S6s2ywK5vdxzWglRIonmUGjklsIEAc3Kj8d2HflBk4A&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=Vxf8RiOTG3CKmp6GNfFJKA&_nc_ss=7b2a8&oh=00_Af_0cKXhPO3Rx0zmtCm-ORP9qtNfPz3oyEjEgw-7qE7yYA&oe=6A44B071"},
-  {n:17, name:"Bingsu Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/469107253_869547482058509_8260031768411403423_n.jpg?stp=c24.24.2000.2000a_dst-jpg_tt6&cstp=mx2000x2000&ctp=s200x200&_nc_cat=103&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHQNEmzjLcQaMmgR51kf1pyVUdQeGeNU_lVR1B4Z41T-Sq4UHDKbK5TmQ3FySUadBPb2NYXhDs8DZZ17Z24HACm&_nc_ohc=_MeIw3hA44QQ7kNvwEDr7P9&_nc_oc=AdqN3VSVzYPrb9HHpU_l5dYgvtqhntlT2X8lTTq8iDNgXHNDcv3cM6AGYhKBDgVwfVY&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=w5S2blNQNPBU3RT90A_PxQ&_nc_ss=7b2a8&oh=00_Af81FqzA_yTYZ8ltAZuDFJCCJre7j-iIr_m1mS5LvLg-6g&oe=6A44E41F"},
-  {n:18, name:"BxngCos Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/484869323_122272436204227586_7708370320137141211_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=109&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHuV6yB9K44lRTroz-cghOPnIa2BGXS0fWchrYEZdLR9ZQMPATcIxwZW-nyAuzF3u_qb0poMSkFhm176-EJ0t6D&_nc_ohc=_bCP4tTtX9IQ7kNvwE4rrNB&_nc_oc=AdpvkQrPamCrO4gdDNUU6izuuT_5LOGYXC6KpvEAD0vZAw4iqgFwE-zinF8ENBncpPc&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=-tMExwhTHXDy6uicB7cOGw&_nc_ss=7b2a8&oh=00_Af_gb36aa2_MR5S2cBN--uA-HgyYhfjIzf2DO9dAHAW0qw&oe=6A44B74D"},
-  {n:19, name:"C Lopez", img: ""},
-  {n:20, name:"Catcher Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/615329348_854239470819688_1446179365571080936_n.jpg?stp=c0.164.1080.1080a_dst-jpg_tt6&cstp=mx1080x1080&ctp=s200x200&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeH_CVkA4Tx78pFEIchLYVxdEY72Q8rmR0ARjvZDyuZHQP0tWbHf0UwD301C6XVbwM0nia13Lma1ZKwT73CALaWm&_nc_ohc=VU7x896c8pYQ7kNvwHmo6tT&_nc_oc=AdqrqKq0tII03szAq89NeBeHAbJiFuk0vpmd78tN48tYiZZJMnrxE-tA_dGJY8ejM5o&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=cmMgB51ooeeUKhYHEh3-zQ&_nc_ss=7b2a8&oh=00_Af_fo5j1tGSQuzj8FjmJnw2m1px5mO7h2wt9qrryCbRk7Q&oe=6A44E0B5"},
-  {n:21, name:"Cherlyn Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/481673211_629035279754690_3843299970489970642_n.jpg?stp=dst-jpg_tt6&cstp=mx1000x1000&ctp=s200x200&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeGbK30yJkCWdEzB-uj-RwPg92-Cvr9L_qv3b4K-v0v-q1gAArSREnIIeBoPwHFp_1J8o4KfmnIQDMTJPU9NbuWo&_nc_ohc=lkx_VVHboUUQ7kNvwFHT3KH&_nc_oc=AdpDxDuuyq8TeTIpjkqw22hkoAt1jEbD6H6ZQSrnSKVlm31xqK15yP-WpdFZIEU_uDM&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=fnxMQs2OwluiKVG20vZcAw&_nc_ss=7b2a8&oh=00_Af-jEQ5SzA0JvKvMk4eoJK0rYzqOMwlcw3NMGBX6nuSM4w&oe=6A44C3A0"},
-  {n:22, name:"Circe Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/481673211_629035279754690_3843299970489970642_n.jpg?stp=dst-jpg_tt6&cstp=mx1000x1000&ctp=s200x200&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeGbK30yJkCWdEzB-uj-RwPg92-Cvr9L_qv3b4K-v0v-q1gAArSREnIIeBoPwHFp_1J8o4KfmnIQDMTJPU9NbuWo&_nc_ohc=lkx_VVHboUUQ7kNvwFHT3KH&_nc_oc=AdpDxDuuyq8TeTIpjkqw22hkoAt1jEbD6H6ZQSrnSKVlm31xqK15yP-WpdFZIEU_uDM&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=bTh_1vb0yKZdyIfW3OKDiA&_nc_ss=7b2a8&oh=00_Af8kS_TjbTpgGWgNebsIC2Y2K82q9BGvpBHBMrJNWPRpIA&oe=6A44C3A0"},
-  {n:23, name:"Dampeer Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/576473286_122157490802615751_8984601310049412113_n.jpg?stp=dst-jpg_tt6&cstp=mx1052x1052&ctp=s1052x1052&_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHXHhlgLSRvYJFbYJvUVvFZUOv39V3-MWBQ6_f1Xf4xYCMpXDM-DJAz8nZAOECYPS22BH-76tbd1WcD7uTrOmxI&_nc_ohc=MpAuNEmcHUcQ7kNvwG9gGx8&_nc_oc=Adrhg5-cHidPB0qhTHqFMt0bjjWuQZdFfCiH0MT2BTqjI5kjdkoBNhSOxNC2DNndK-M&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=oz2s1TbzcB1ThK2ErMGT6Q&_nc_ss=7b2a8&oh=00_Af8cEVfrPwyj4pm_Qb-sIwRW5lcV9gZ7edB_1kPyVicCOQ&oe=6A44D70D"},
-  {n:24, name:"Demi Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/485095631_671962261986508_8911299364877725036_n.jpg?stp=dst-jpg_tt6&cstp=mx1792x1792&ctp=s1792x1792&_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeHo08BBvccWBaNzzxvrT22F2FC3ZK5svPHYULdkrmy88Q5metmd_Bhhk4DviBF7KQ4nHl53qD1JJSJGvyGAOxHq&_nc_ohc=zmSfdSGczUQQ7kNvwF-VpOK&_nc_oc=AdrJzkwZC9uvBrJH01eC2eIl59NNrul5qWzgIpmBOnPzAo4jLKP00HidguDJhjo-2ic&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=LH8iuPlq9X_mIorFkVXsfw&_nc_ss=7b2a8&oh=00_Af9S-gwdWgleYao6T5U4LOGGrCB_oqTu_3l74HR2RWgyig&oe=6A44E7B7"},
-  {n:25, name:"Dida Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/509299452_122215404794151401_2570315885861250998_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFLiX0jYcovhhVWUzLVQBsGid7NypdVBxyJ3s3Kl1UHHDNFFXWM6ViCSaFOT9E00AV1cu3PSThOx_hMzYAHNhVs&_nc_ohc=Il1ejRTtEHgQ7kNvwFrQWzA&_nc_oc=AdqnqnHLU6lO6ucU2lVjuD4fAqs8gPAdhTMC5Rn3XOWTphtjX8ov833xRB9BvivpVXQ&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=pBAhVOATyTf3rWumC-lJwg&_nc_ss=7b2a8&oh=00_Af8h44zsPh9FNl19RXteHrc2emc8bM-G9ABPzcGqVaS8IA&oe=6A44B155"},
-  {n:26, name:"Emma Lopez", img: ""},
-  {n:27, name:"Emblem Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/725640684_122300910572040053_119942689577792401_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeGSw13pTShXjfQk9x_EPqqveKS6DyxJnpZ4pLoPLEmeltiLYiqWjDmFIRtrt5n7n_1DBKJ1SHeyLcoWVGSbpZqC&_nc_ohc=hGwAOpjocbgQ7kNvwFlk5hv&_nc_oc=Adq9culMhMZgtnwMbmCnk9QK9rcUSEGSsCrUrviMia5nqE_DCsWz09r3hVzd43aKVPg&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=DP8uTDa1Dh18buA3__qLHA&_nc_ss=7b2a8&oh=00_Af_N-qYKZsw17SK6YAzkjzsrJrcE9G1fw_M_u2QRvcU-EA&oe=6A44DE96"},
-  {n:28, name:"Errxr Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/426722988_1513124209617873_5614478869720320707_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGvIxMlduKNZeEYSYftF7FRapjImRrHHhhqmMiZGsceGGzdLernF-oK9ZDw85bLSlamv6qDQMvYORbho6KXxdhO&_nc_ohc=TSROUHCSdMoQ7kNvwGoNf-9&_nc_oc=Adr2v1SOsPfELYWQIL5-Xvbft0owKbvofQn-4N9TAusFiINxD7Jfy_Hr3VsaxclB5gc&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=OA0SNNdRlnnyV_0gX-HWIg&_nc_ss=7b2a8&oh=00_Af_eNQ_YDU8nYoZexmYD91oqhqDm5pi4oZu6lof0aVsDnA&oe=6A44E788"},
-  {n:29, name:"Ezekiel Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/714599474_122259535142181255_3471475372626182146_n.jpg?stp=dst-jpg_tt6&cstp=mx843x844&ctp=s200x200&_nc_cat=103&ccb=1-7&_nc_sid=111fe6&_nc_eui2=AeGp1lgqSkuz5ddJPKKWIVh2KHBpGNBUvtAocGkY0FS-0ERES7Gu_unDqnHlWHzeszE8TOKcB70cCUWpg-841NyQ&_nc_ohc=8LaxMMXzLbsQ7kNvwE4Y0DW&_nc_oc=Adr_kyc-HzGjvEnTQQfcDab4pYF5K3AYunff9h0sDcfkwKnesxeJIuV7EVEbVzvGIME&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=I8p5RplX6pDjLq9G4pV6yg&_nc_ss=7b2a8&oh=00_Af-fWkph2zpScmbAxxQipu5dH-4FgLMx3IVB0Go7t7tWRA&oe=6A44E47B"},
-  {n:30, name:"Faye Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/476119148_565492689944545_6142157957376373948_n.jpg?stp=c221.511.1524.1524a_dst-jpg_tt6&cstp=mx1524x1524&ctp=s200x200&_nc_cat=109&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFDI0qVq6dATQTNqhMpxEJUrDClxlOCICqsMKXGU4IgKrzd6UfRPeg-gnIIyOgiMoiKSzWjIxPoL4x6tNLlg5AW&_nc_ohc=pUHPixQYLL4Q7kNvwERcPkn&_nc_oc=AdpcBVyaavCG02z5AHbgiFCjh0vO7mKSyQJFZpLlQO4Wvn5ZW4E1k-KuogDpHpN0k_w&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=alGrGUkK2RzWP0hSWUaIIQ&_nc_ss=7b2a8&oh=00_Af-Leu9V1tSnDwAc5fdS44hPlARIOkRN8R-cogTxI2xZQA&oe=6A44E202"},
-  {n:31, name:"Felling Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/472375084_526520997098515_3622010119417731472_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=102&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHAuCkrSI9MIBzcLabs6PIXpyDV4Jp7NV-nINXgmns1X04PZREy0OYfVnqB5QFkqmCAJT48_lF4wDqMkRgHkU7w&_nc_ohc=Z4TtX3GQOuwQ7kNvwEWRnwL&_nc_oc=Adp39Q0aiPKYcJ-iKL19ztNOSNmW_FWgscaqbp8XtXFDZ87NfUUcKQX8HLJC_Ya50oU&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=XmPaASmVr-t-M8TavzeP6g&_nc_ss=7b2a8&oh=00_Af-mPwoaKT3ZZ1oy1UucNTdceo5e_GUeLQCJyOtj5gqj8w&oe=6A44BB72"},
-  {n:32, name:"GamGlom Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/499535541_1021727540092014_1151557970624122737_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s206x206&_nc_cat=107&ccb=1-7&_nc_sid=fe5ecc&_nc_eui2=AeEZoo8dWbNWOI5IluO5HzoHTodwBhxl62ZOh3AGHGXrZrLZsBBER5d-WpeFKZZzlJlcrlAwe12YqiFKAMu3eknT&_nc_ohc=IEW0vjzNaXkQ7kNvwHwozoj&_nc_oc=AdrHUg1RAmjeY3HBLlJL2byfRxONOzx1yhZzSR-X6UhoNowzqeFNid31PAcYNGd4AEM&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=Dyb6se4bQDuoUvkx5pSaAw&_nc_ss=7b2a8&oh=00_Af8q_cU6zzZ7TrVmdZ7vLWmE4Xlj89oNo7r0VUslmsZzJg&oe=6A44D7B8"},
-  {n:33, name:"Giselle Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/646499891_950518070970402_903760332042090318_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s160x160&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHyidpuHQtsN1D2B0sVpwy6YsD9X-Y0Y_xiwP1f5jRj_D1Y_OxiywE5_XHxNnfFvsBoVIwYplWOou6HDmAXBG2V&_nc_ohc=WsUMuI5an4UQ7kNvwHs35r3&_nc_oc=Adr6PTudrP6EQIO5Jy7K_OQRtJEA5DzSEW5L2WvapPefrFdGE15uMlwM0y8IwtoA718&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=rgZafIfMI7dJUrekkzybJQ&_nc_ss=7b2a8&oh=00_Af-giY20WzV8dqcvYpXv4iFmCAERKLCMff9hL7FGjmHNrQ&oe=6A44CC9B"},
-  {n:34, name:"HanaNa Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/652511309_928079259944005_6649831320404038078_n.jpg?stp=dst-jpg_tt6&cstp=mx1023x1846&ctp=s1023x1846&_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeGiANVJdIlatK2dGFQmvXqMPnzCQMid2qQ-fMJAyJ3apBsTbC_S5s_8yhpuIJPVSVfs_On93VkCNhPWmDFKc6bm&_nc_ohc=zjSEEDQHHBoQ7kNvwGsN_Gn&_nc_oc=AdqyLr9crPVpWGVUy9_wqddDXT_WPl1pAuSahVEumLXj6p-igSgTNw6QfQy2aTbsfd8&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=zw-rnPkwnSN7LGWLIGrYYQ&_nc_ss=7b2a8&oh=00_Af-A3Bh15C7MlrbSnlwzDIVQNlHpT4gPInvRGaFMmZUvew&oe=6A44B704"},
-  {n:35, name:"Hell Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/615582329_122282848586225606_4904617024916426253_n.jpg?stp=c0.124.689.689a_dst-jpg_tt6&cstp=mx689x689&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=111fe6&_nc_eui2=AeGZYKBFH7UT-4x1RmiRZAbMox3tMqINYlijHe0yog1iWDgRUQ2bOAvciP2kKmgiarGLOR3201Rk0k4kkr6DUXQs&_nc_ohc=_BrXMJFJ2MUQ7kNvwH2YdxH&_nc_oc=AdpEsgXtAahotQQm1AmwaRWQVw6VQkh8bULh7fMhbZftyCPA-NbWtaEoCzTIDOZLpkU&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=vyN09dYezqqwObJzW_g5HA&_nc_ss=7b2a8&oh=00_Af99lcGX6KnQzjaRa2BfLWHdl055CyYve7u_-9IEsMcXgA&oe=6A44BFF0"},
-  {n:36, name:"Jade Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/708489368_122132762637100507_1340661912563269722_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHXhE2YBfmOkvSiVZbBx8-BPreoHr6xgSY-t6gevrGBJj7VGOYxrkf3RBiduZA-1xpoRiHDeAXUHKcTt5BNKwOt&_nc_ohc=8AsAl0TwmZQQ7kNvwHrvCbm&_nc_oc=AdrKiISTKdIX1G-I2m19Gk-yHs56JVCMxm5UlffAUJtCUTt6ubNF0Zsiaesrt9sOMuY&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=oTkJBc6gLrvVVbi2tS_PYw&_nc_ss=7b2a8&oh=00_Af9294HtRLhtyUTujwMOKNHEOYEtpZRjFswqeakxQ6XCow&oe=6A44CE5A"},
-  {n:37, name:"Jaylin Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/669136278_1338506204756223_1958285934350692331_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx1179x1179&ctp=s200x200&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeF7hs66khxwU_RV2x6iCLwGw6jWMPY9jVnDqNYw9j2NWS8ElfQaBRwkJgddjDWHjEF_1UtHXXyXcVPCmZAxnOPb&_nc_ohc=ZGoPrLQSlMUQ7kNvwFg5YaK&_nc_oc=Adp4WCWIH8pePJYjUtvxS4dWMw0Y_BUACU-0m_chAcL-dCxa0RdNrHAQp_aH1DRKogE&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=gtv9JwCPb1wsslj1xQsdpw&_nc_ss=7b2a8&oh=00_Af8P8b1XdCRXB7fzBk4Zy_tZQn-duteTrYRQVLjnon9JTA&oe=6A44C474"},
-  {n:38, name:"Jaynine Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/728543885_4308823356113608_4121004701613630587_n.jpg?stp=dst-jpg_tt6&cstp=mx1672x941&ctp=s1672x941&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFRM6dhZaHuVG80gPe5KQsoooA2Uppbl4qigDZSmluXikm6HSMw6lz1xZkWcOvbDHo9hxuFIoFuhknE3jIsxtk1&_nc_ohc=Psw9wABs3vQQ7kNvwE-C_tF&_nc_oc=AdoZ9_ZQ5Aa9ri478364FJ5ZXvUkEcd-GWD3tkJtyh2GdGwTzcnkF_7mDsLJcAGxxgc&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=2fQU-_Lbngt9rKmiTUoeKQ&_nc_ss=7b2a8&oh=00_Af9TTHG0h2C3x6x5xeAZPdme4RFDQBgVbijndb7_HxMNMA&oe=6A44CE69"},
-  {n:39, name:"Jele Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/482245748_665195152676679_8327052643116005350_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=110&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHoUeVNMl02XW1g0K5KAV-JerA_9rxTbEZ6sD_2vFNsRpSYVOqoSyrP0HkQtmpzG18iH-1rZmo86IgjNbzUrV7f&_nc_ohc=FsNEtC3H780Q7kNvwHTuDea&_nc_oc=AdqParNVrMmgE6n-ZG_wetAEmN61KJb_WVcrYdFWcwtVNSJIuA0_KWQ-7EFR76-TAZY&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=OsWnfA-3XfcB9Q26z6jnNg&_nc_ss=7b2a8&oh=00_Af96TBGduRG9U5VZmhcO7w4S5eNV3lDqjQ-sHsN2i4dRaA&oe=6A44D7C9"},
-  {n:40, name:"Josave Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/707946939_970121872459706_8391717454531291841_n.jpg?stp=dst-jpg_tt6&cstp=mx960x958&ctp=s200x200&_nc_cat=110&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGoNCWCa6TkuHFQuHS5Sdj2bXfU7Tqib79td9TtOqJvv_iT2DH7nBp1Yb_2_OXwvisgw7GLRe1eQPCo25it0mzm&_nc_ohc=07YNIfav6fkQ7kNvwGuw0vC&_nc_oc=Adp-DPN8tNmo1N4DMzikbL-d36ZEU0u-MB_PHCKpln3OFCGXiafghqMT0pXwNWC1de0&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=T9oeKf40hFlDDe15m44I-g&_nc_ss=7b2a8&oh=00_Af98a-rHHljLsdVl2DAPuyzhx5kGi0Aj_d_1OVCttOS2Zg&oe=6A44EB2D"},
-  {n:41, name:"JRs Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/710216770_122176637978890444_6145683328943187180_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s960x960&_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFSgF1spV5io45fgrCbj9TexR8shkdMSSjFHyyGR0xJKGKOW-moSvhtwODhGaITSQmpioSRBRLZhneiolIxqIUX&_nc_ohc=a5c756GWlJwQ7kNvwHFsuhx&_nc_oc=AdrqtFMz2sn6A3LelmGsCO0GM9FpSOXsFhJ8d-17GXeqbh99CbzGhE0J3YAwOKGDGdQ&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=0DsYQaL747R8Mod2zcdQxQ&_nc_ss=7b2a8&oh=00_Af99XVlIqFe4uqiMkQXwf4WcOTvMGyO2kWzh3QmaEPEpwA&oe=6A44CDB3"},
-  {n:42, name:"Kenzo Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/476034018_664681536087783_4003557751576312640_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeEL7dgcMS9KE1zpoHh3uvhMWPy5LhWU37dY_LkuFZTft-C7kquZyjU071R3-8KxybYAVnQ-nsOkZK69j0NcPM4Y&_nc_ohc=31EyLNesdCkQ7kNvwHsoiB2&_nc_oc=AdptnvemnJLzVsaLuHc69YgkOng7hmsTjlEi0pQH5UUfoSXiw-7wf5Tl_DGrgbPPdu4&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=6DE67UEMRJhvO17FQGSBHA&_nc_ss=7b2a8&oh=00_Af_yQOfxll_Md9S2IT7f-5z7Y4k4ufp92OpKwhRycah0ig&oe=6A44E958"},
-  {n:43, name:"Kevin Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/722963870_122222758868520225_7832262231446293357_n.jpg?stp=c0.167.1543.1543a_dst-jpg_tt6&cstp=mx1543x1543&ctp=s206x206&_nc_cat=106&ccb=1-7&_nc_sid=714c7a&_nc_eui2=AeH6Q2rMXLrlqNYdoKoZ3zs6wA2B6wy7x2TADYHrDLvHZF7HskvR6nnFdSok6rLHgc8bJNSPr6fRBuFJ1cOZiqmj&_nc_ohc=ZYshRpvbAgUQ7kNvwHcY1A4&_nc_oc=Adq5G4r9B7rgR3F9I9vsu0zAB_XagYY8N79FDKpgPwpw1Bc4QdiD1tjQzclhjQurLSI&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=BEuiek9j_woTltICKicWKA&_nc_ss=7b2a8&oh=00_Af8kpdg5GgEW7L9eZ9VSS5TiGhg3kLmVDYaUygu5vjRw3A&oe=6A44D94F"},
-  {n:44, name:"Koko Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/484984883_651851620718216_8972921504884408072_n.jpg?stp=c0.266.1516.1516a_dst-jpg_tt6&cstp=mx1516x1516&ctp=s200x200&_nc_cat=107&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGavcyKW0-YvHvFlVSLSjBXshDO0japnpGyEM7SNqmekSk-_eNCblUQhCjAWAHYfYyan-iDG6ZGMjfRuzXRku3V&_nc_ohc=iFm9htcschoQ7kNvwFenu1J&_nc_oc=Adpn9F1WTTJjazvzYtOpPTNU0dKm4iOmLQAk4yVRaG1FtBONb601QVI88vvgP9HdhNk&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=IzknH_oYpYqO1Ux9Nw2fRw&_nc_ss=7b2a8&oh=00_Af_6W8soleNhh-dPW4mL-l67c4k4TBhZ98iLSH3VMFV_1g&oe=6A44D3C0"},
-  {n:45, name:"Kumo Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/637867241_122121886383127819_7161752140812640256_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGExqWvvUBy_tqH03No1YT_gKLCHLEq67eAosIcsSrrt7SplH7h5jxMOdyxPbZ26N3u4CG98SeFA-5udJMc00xY&_nc_ohc=0bUVL030eCQQ7kNvwHD5yii&_nc_oc=AdoGKrwOPIYvUu2ZPE1ylgtgOnhHfWX2Uztjp0Bq2vRerSXILrqzYXvELkkw_3JpjIM&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=ZTrh8Uc6-v5fytgJLilBXw&_nc_ss=7b2a8&oh=00_Af8fVNshC-wwaGqqK7hmTsB2LhIyP2ieIBwpYSjQGNo2Iw&oe=6A44C489"},
-  {n:46, name:"Lee Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/480910711_1609079023305580_6228322522234401195_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=104&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeH9wU8QUVRONk77Q5Ch_iqNcayXQq6GqiBxrJdCroaqIKNCW2SbR-HoL-xLPquHZ8ZoBtF_x6_GFRyNiTimqnJi&_nc_ohc=m1Ns3Sc0B3QQ7kNvwGDgYS6&_nc_oc=AdoQX-sNH3Q-_Y3FoQUaYwe7aqS6kjrTv_r1k4xUT9LlMSWKE90-6CBWYEqCiXt9-go&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=iebcDblLex5VvcxAu3pyrg&_nc_ss=7b2a8&oh=00_Af-Q7bDxqWXlxLkbLv9v8Eh6QwoebKE_XFgnmdDJPt7mVg&oe=6A44E05F"},
-  {n:47, name:"Loma Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/484028944_627148579953114_5005402614268855161_n.jpg?stp=c0.296.1152.1152a_dst-jpg_tt6&cstp=mx1152x1152&ctp=s206x206&_nc_cat=102&ccb=1-7&_nc_sid=50ad20&_nc_eui2=AeFxo6tCl2kzYDdiP7wtOFzudZAehclKZ7J1kB6FyUpnsvpWQBFZeLsZM8lsKjKV6wFJhL2KZB4WGguPOSi3_TpH&_nc_ohc=y-UJKqsMkiUQ7kNvwHONjl3&_nc_oc=AdpzV_HimmbznO5zmCB4qhFKRBod8h8gRCMwVgtAsm1Y4rJ3ycpgSvgj3eDlWHClbIE&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=zwWoegCh1QC21IS2M6HANA&_nc_ss=7b2a8&oh=00_Af-v1NZwpGqCcLbDcn2ZCPM4PQTn-DMWzW_pi9X4sY-L_g&oe=6A44CF10"},        // ช.
-  {n:48, name:"Loma Lopez ", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/643468607_913331671245735_5106175229124089306_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s206x206&_nc_cat=101&ccb=1-7&_nc_sid=fe5ecc&_nc_eui2=AeGZfy3cgkPZMptkMwhRVOr6JeJ6YYUF9OQl4nphhQX05JFDTnCrzCFE12FdFmZ8JWOSSogM8B8uN5_fVCxF_WQt&_nc_ohc=Ea-5eAn9JTYQ7kNvwGG7PK5&_nc_oc=Adr7XFuaoRClgwFAhgA55IGc9-3fNVffW1y0REzT27sQlqEMeSU4QC-NQWrwoxvbr00&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=VciGvZyjTrez090FnBtjFA&_nc_ss=7b2a8&oh=00_Af-ZVLEviKW5WM-3M6NmkmW_YuFtFCMWYpkGpHBSgwSNww&oe=6A44CE18"},       // ญ.
-  {n:49, name:"Luca Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/719804444_998290703205356_9086029857182990250_n.jpg?stp=c0.178.1153.1153a_dst-jpg_tt6&cstp=mx1153x1153&ctp=s200x200&_nc_cat=108&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeFhh90v6DmnND3iSQORcI9JsjlE9JwlnSayOUT0nCWdJstLmn_w08JMcPQapAGO-tq6w-9buKRXLKx08ElI7eKI&_nc_ohc=bmKTDCx6ud4Q7kNvwFgDfuw&_nc_oc=AdoQrLrSMkmUuXQ4qRArjhDccD6DAmXMWBPLBid9l9NpdyjTe4affxlMFuzxEprIIR4&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=zoYBItuER5l4wH2vbCaOPw&_nc_ss=7b2a8&oh=00_Af_RvCZpRQ4GNSg0sgp4NxUozFsakAwJW-clEGs0i-vfqA&oe=6A44D982"},
-  {n:50, name:"Maraa Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/618224206_892472763166685_7207421227701716153_n.jpg?stp=c0.0.1024.1024a_dst-jpg_tt6&cstp=mx1024x1024&ctp=s200x200&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeEjdKUZgaNbSUEdLXncJ_BWoCKw_0JSaNCgIrD_QlJo0HZcSV0jiQZ3cgzycOl958EmHg4Eg447k0POyRcUdLWS&_nc_ohc=r3fTiDjaW-QQ7kNvwEdCc0a&_nc_oc=AdoFvgc6XIwe_4DsF13nUC7ldXHXJ21Pdd1k4neU0NXw9Q2nmEhczk8HoN3uoHE16-M&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=ztLJlVdSKvGPtEQpEJyJaQ&_nc_ss=7b2a8&oh=00_Af_tMaVV-KToeuL6fMMJ5w1HEZmKZVARKUbVECGapMH35g&oe=6A44BFEC"},
-  {n:51, name:"Mia Lopez", img: ""},
-  {n:52, name:"Miguel Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/561918146_1135908561966047_316687337246915002_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1153&ctp=s2048x1153&_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEW0yezhD_ARkoQWw4ndfdIPiL6O6k4acg-Ivo7qThpyKL2qYDfRtR8V4Vw-n8UiQE97ZdKv0HXPQoulkh8-GMI&_nc_ohc=IBTRUZpb6sQQ7kNvwEqszzN&_nc_oc=AdrZTK2xI94WggAu7FKfuV3soQN4wFB3rlJz3t71_fe0sreFDQDbviLUAwLIjBlAymY&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=9dp5cUjMwwyfxKHymQv2Ig&_nc_ss=7b2a8&oh=00_Af8LJio3Q7RIyzKbuXFMggmXN4ncz_XhRJN0FUlFy7AHOw&oe=6A44D9DC"},
-  {n:53, name:"Munmuang Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/600210952_122187550772459328_4048076666480124303_n.jpg?stp=dst-jpg_tt6&cstp=mx1069x1049&ctp=s200x200&_nc_cat=103&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeH4LUSkv8sqHmQjdnyJzv1w6LHJowfCYGLoscmjB8JgYnISX_s6KNI5_OVULKnoT2n0d4QlgArGYa8_woBLtA94&_nc_ohc=7k4VX6K9xyYQ7kNvwHrQbyH&_nc_oc=AdpPu7TyT3mM5D5RkLvzbJpUcs3PfnrQPd3d28hBh2vgXdgwkpwWiIdibcZYzMNbES4&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=3PD3oWauKgXfLbhBzLUaMg&_nc_ss=7b2a8&oh=00_Af-_tEkS9SnjufqmVA-mZvwa8qAfbi1bFj8hSVnt6yRJbQ&oe=6A44D22F"},
-  {n:54, name:"MyMm Lopez", img: ""},
-  {n:55, name:"Nami Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/602007928_859239050042369_6896385650459233557_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHKDr_vlgH5p6d2jwQUUyHuS3N12DZjRA9Lc3XYNmNED9K27tgyMcZuw5nJ960P6Y1Ty_5SB1LNguTEKFu-AaCI&_nc_ohc=HRY6o2HijzIQ7kNvwFF3UqH&_nc_oc=Adq7CdLm1SmRphZdx3EBlsYf1fKMN-HOL80FdJGreQ0kKGUMppMDwI7NWqUxKzP_vL8&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=tVLyUFrVNkL5F6iD9xJ1tQ&_nc_ss=7b2a8&oh=00_Af_Z2K72gxnmPhOjxEZ2ElJKxFBjmkhV6Jv2mhRh-RsnwA&oe=6A44ED22"},
-  {n:56, name:"Natthawut Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/534602344_122194511282309925_4891040453356110866_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeES8KOtK0nSkFIFPgb3dM2RSS7p-4e-sYxJLun7h76xjCwRLEjxPXZqXHv845T16-Z632r5dV6bxYbEwOoYboDT&_nc_ohc=1AiTsYieOHsQ7kNvwFcWgqC&_nc_oc=AdrwznqErHlvVMkM-smv4pF-ZAZM_VmjTuB9qUZgrPt4oj_Te6sFJ5hUmnjGg5vPV2U&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=cFkN5-4Efc3no-2zL-Xxrg&_nc_ss=7b2a8&oh=00_Af_dSFT8Jdj4oW8NY7UjlwGAHPuoHFp-5g4Ab_A2z7zKWQ&oe=6A44DD0F"},
-  {n:57, name:"Noah Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/474621853_122201656028060156_878269811856052771_n.jpg?stp=dst-jpg_tt6&cstp=mx1008x1008&ctp=s1008x1008&_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE-szSBrkavhPqEOfFq0wgTWfVUCjInqypZ9VQKMierKvNCi0eZ2EnWUajKQy8uW5jka22iamxV8hzzK266Rd3l&_nc_ohc=6U-EJ0DoOfwQ7kNvwFR3Fhq&_nc_oc=AdpzZK_zDSUTQmKlsYuEpICiVkSr2EhJfQJ3AU74v9zGry8pibMYmCuc3O4dSzYBpsU&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=UgJ-JXJu6YXCynodtpr83Q&_nc_ss=7b2a8&oh=00_Af-yEm9vURSCBlWXHS4XPLwz6jQCdLaHit5OGwD8K1-xGw&oe=6A44CCA8"},
-  {n:58, name:"Nozomi Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/657332151_869442139471122_8757017670909189232_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeEUvNGhK0W8l0yQMFxXLPoXrCItoLeB4sWsIi2gt4HixWEl6kU3daBeMckOw46DWEWL6Ri93t3KgvnnGYTz2rXo&_nc_ohc=8FMnh7llGUoQ7kNvwEBiKMi&_nc_oc=AdoWrKyFweU1tzuxZ6GblP5cnk1ZIco3FK-V2zQ_lN8ShjUX51NfssmQHsaGXdG9Ho4&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=keEahhTOZDVUemD2U0AzLw&_nc_ss=7b2a8&oh=00_Af_hV_Q3VqBXGSGdyIq-tF9ad-dFDLbWnIqNZCyAu8D92A&oe=6A44B8E6"},
-  {n:59, name:"Pipo Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/723240597_1404333334819739_8628460259308222236_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=106&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeE-rMA7xiq-m8WlaNh9LkCj_OLXpvRsIVH84tem9GwhUQB7aSYR7o6U1k_WMKQ03WFYse6W-Ej32RTLBshnlMC-&_nc_ohc=nNCO6e1whk8Q7kNvwEqwfaC&_nc_oc=AdpexPbuQZtR5lY2byExXYeMVouQTDVngfonk1oGmoR9NXh4fdyvm5y_AdVIYjP69x4&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=doeNLcC3rBoBJB9adm9q0g&_nc_ss=7b2a8&oh=00_Af9a_gkL9AdFMHBawgdBJxgWHvBI7vH9S2ybFzX_m3sZ5Q&oe=6A44E645"},
-  {n:60, name:"Puxd Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/351170164_802402101132953_8680784387136913191_n.jpg?stp=dst-jpg_tt6&cstp=mx1616x1616&ctp=s200x200&_nc_cat=106&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeH2dhCyQPT8ph0Uiu94g1Mnwz0QhsEAUOvDPRCGwQBQ6y8O8ilAIocV6p_GN4O1KsXuYkpkACxJjsHTsDiVrvMr&_nc_ohc=-gc06ZaSZwAQ7kNvwHFtxcY&_nc_oc=AdpMtgPcCgmlFdv_RqByf2hJynuv4HM8J7Ri2obtGPufJkZqex6geGdjRWhCU7tLYxs&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=JIrJDVZd-_MXFrofjiiYRw&_nc_ss=7b2a8&oh=00_Af9OvIBXZK2uTqWyLiCfiOCDsLwAxeM_ffO5am0x7QeV6g&oe=6A44BC15"},
-  {n:61, name:"Rayleigh Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/617609054_850177651224450_8285046996670549651_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s100x100&_nc_cat=102&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHlBUAAfp8Rc11vODkTWFsjgD7O5wyQ99KAPs7nDJD30lTyxDlQCSWIRvy5lIqwU0vYphw6gQpqOOarsc1Ekmd_&_nc_ohc=pySQgZDqh8YQ7kNvwGqclGh&_nc_oc=AdqqzXDivN4AsN92ZqdtQ7f4-s7PdTDV8fT1qcyMnOEc8E7uSdgAljd6mybRh-4Gd_E&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=hdq6d9cJ1394GjBWMGPtWQ&_nc_ss=7b2a8&oh=00_Af8mfEORjeHq0l7nhd5ywjlD28OVGq5qbdCfMVYLmwcESw&oe=6A44CDDB"},
-  {n:62, name:"ReiJi Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/487177051_689724976956260_5015977793944878346_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1152&ctp=s2048x1152&_nc_cat=110&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeHZq_Ud-sdcUA_HHxhn9YLk7iIxU5q8D6fuIjFTmrwPp1CJ7vL9OY1KqBPO5PovAviRKPXSkWiAtPcxTDOGN0xA&_nc_ohc=EGwE72hw2ecQ7kNvwGM9Il_&_nc_oc=AdoC0Fklvs_BUqvkNBGAtzU3Jy_6IWYdPFexREYAF9jzcckQRne33HDByGf36Fhy41Q&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=KROoes_7Fp7lksttZNB3Sg&_nc_ss=7b2a8&oh=00_Af8hs3HLugZk43vGsYJtOe94TgWts4N0f9HfdAfmAHnrMw&oe=6A44EE2D"},
-  {n:63, name:"Reindeer Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/575171343_827373156682500_5555457502516767810_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFwcyMsbwgm5QLyDLWDdFue_1zqeqFmYP7_XOp6oWZg_uJpVk7Ft1E7AfU7QYpQVvvUI5yG4-zgwg_gW377JMVn&_nc_ohc=lXNw8lDsLUYQ7kNvwEv8SxW&_nc_oc=AdqaIna9s0QBEk3Rz5Qqn4VJi1kY8QAAYGGQetliHq49tQ0T2nGeij5I2j0KjARAxWk&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=eT8tu_OEf96pKgb2rejMSw&_nc_ss=7b2a8&oh=00_Af-XBkctgcJAlduBoUdkS3--nNAZdIzOkrWDvcWpAcRXsg&oe=6A44C889"},
-  {n:64, name:"Remie Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/480750926_624389570182350_384175151936693603_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGqHbZHyHndPq1RQ8HmGgp3iRd28kwEVp6JF3byTARWnoPs6KK_NvDjIXHG51Rv9pzz2-1AT_RqUbNUsMSY3MRQ&_nc_ohc=u27zbPIc8vIQ7kNvwFpGzdy&_nc_oc=AdqCwxHeKK7MAEoWVaIF4vyGg7Eef73Oz-_y_h_TMCPGs0CmoRLI9Wq6TP8zhcQOw64&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=g8ViKrVWAFBWgKyK1OiK6w&_nc_ss=7b2a8&oh=00_Af887sgOk5ZG4EQmZYhO465cdrCnBa2LddEiUNuTNkygVg&oe=6A44C62A"},
-  {n:65, name:"Rose Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/626754485_122145429152976927_900638899154206884_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s200x200&_nc_cat=109&ccb=1-7&_nc_sid=111fe6&_nc_eui2=AeEZiKqmxy2fdUTlvBvGxtPBM4HHjzyQjqczgcePPJCOp9zn_u9lDdDcO5bZSpuoZ4Rl0set0vSkn42fbyRsHl2J&_nc_ohc=hJr0VVfaMeIQ7kNvwEroyGS&_nc_oc=AdoHRWo_EV6axKiUunewFFyZbhpOBtj2r5ZzojzVYefPsQlMCZBuYRHLl1AhKx4dEPk&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=pwhEoljixG2rICwWjdUHdw&_nc_ss=7b2a8&oh=00_Af874ysCM7goNs56vjiSei4e0Hf5jf8bo0QPqT2Ut0n5Tg&oe=6A44DBD2"},
-  {n:66, name:"Ruben Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/597331537_122111436303111542_7384859003986613565_n.jpg?stp=c0.141.1907.1907a_dst-jpg_tt6&cstp=mx1907x1907&ctp=s160x160&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHQIC0GfEdNX_rCmlPSt3KiuBulz76lmYy4G6XPvqWZjD12STGNNd2eUaMRsyKA1rF_IMiGFGfAj9nQ_QpKSLHG&_nc_ohc=MhdHwFD7tfYQ7kNvwESw0k2&_nc_oc=Adrcz2JpqYAlwaC7n6wsXCQ68di-fvrMHH29jU8XxV-c__Jo8Cey1xkPhxzKYPPt_B0&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=1vJmHNxPbWEcqUQI3ZO7nQ&_nc_ss=7b2a8&oh=00_Af-HPo2kEa0ZXeFUQ1fSOqtB8mu46TXL-OQ-JaIWpybs1g&oe=6A44DF87"},
-  {n:67, name:"SaiMhok Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/684518169_816331251551779_1101547083220594475_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1024&ctp=s160x160&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeG0RRmiMETsQFRzkO5JPX4e-f5YgfU1fIT5_liB9TV8hAv0LvIjKJxNZzjK8mA9MQC43TkP7WZRwgYi5PTYfBGm&_nc_ohc=_oJQCQQpomMQ7kNvwE_J-IG&_nc_oc=AdqqYfluiNTtB1EospLLhgxY1bTRwpJCmdEmSZIXLOKjwoelUwti49vkKY7u6zP2DqU&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=6-OoWoNySgsxsdRo5jnHeA&_nc_ss=7b2a8&oh=00_Af93TM0x4hxMpdRC8VJbXnoAJ9LLeYa7f6lAHV7CGXTgJQ&oe=6A44DA5D"},
-  {n:68, name:"Saki Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/460727735_1028545722328763_5062179721700000809_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s200x200&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeEv_I7ok3q4pdz-egwWxJjWLswuUQ554jouzC5RDnniOqeeM3t6nCvlhZTp7BPzBL85B50XpGBBvar3m1W3ZWwh&_nc_ohc=aCCNy36IfvcQ7kNvwHTpebI&_nc_oc=AdqwVQANEnd77mqPh7NkXHWaDLQujj1_HVfRrtxw_7s664AVUshtuSfzSA3h85Le9_I&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=fyMhko9iDZUPBVHuTX7QbQ&_nc_ss=7b2a8&oh=00_Af8KYXzYiL8KTHJu_Mc1QA_pc4BOZdGrmQr72GoWXB0_bw&oe=6A44DC1E"},
-  {n:69, name:"Sanson Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/474934856_1310865916779136_4494960646460175577_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEQZSvSVfk7Ean0dxbkykS3IoA3jOK_Zk0igDeM4r9mTU5cf4AeJf0c6qciSOyd788ZgNdCADlgIegSwO5BgzCo&_nc_ohc=aEwqI8SECWgQ7kNvwEYuLwI&_nc_oc=AdrozDesis0uZv-iuv4nDXeAIjU48DCaGiAdCp3JS5CE6nIIDqMiPXYyQ_13aR8ShnU&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=vt9cW8iWL-I7tj3BgsPCfQ&_nc_ss=7b2a8&oh=00_Af-6-d3qVmdk-g9WKRF5odH2K-0FSsTU01L7h7lcw60NDg&oe=6A44E17F"},
-  {n:70, name:"Seiyngsai Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/672455559_1262628056024087_3135041857998323889_n.jpg?stp=c383.127.770.770a_dst-jpg_tt6&cstp=mx770x770&ctp=s200x200&_nc_cat=111&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHgiMehnbo-6uX8AB2sAPvWSSnI6XM2kCRJKcjpczaQJDO952gd9hAENNklW0B9oaXA4cKaE9JqioCBbsJKxc9E&_nc_ohc=TU5lGMNi2W8Q7kNvwHMhuaK&_nc_oc=AdrZXf6bhjNrq6nTYWIE833QnqItq2m-8HhzwH96yJT6QZTLQBhr4QiKoUcAcnw_wuc&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=Jf4I8ogFdgcXqZLh5Y-6Vw&_nc_ss=7b2a8&oh=00_Af9f8xwXAoDsYbQInlKXmc89QroXxECLcuH1aZYwldqj1Q&oe=6A44E3BD"},
-  {n:71, name:"Sinny Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/474838251_582862031240376_2334155388688315329_n.jpg?stp=dst-jpg_tt6&cstp=mx2035x2027&ctp=s2035x2027&_nc_cat=108&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFZswiEd4RSHZH92jr--oK-9_7oIn0J0233_ugifQnTbdN3Vhc1wr0IEtfB_SxnHH1ICiA15MTN_c-SbjvgC2h0&_nc_ohc=tttn332p9y0Q7kNvwGU_Mq1&_nc_oc=Adp0WQEXUeAvucAXVJWsIIzb9Gu852-mlNpBOjpr3UwvdJW0n7FMngEtbIi3yaD5cxc&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=THUCuzkZlKic1UZk9I0qrQ&_nc_ss=7b2a8&oh=00_Af80qpOw2BvHq92zaBGleVunaZGOY5z614wc87NQobSxxA&oe=6A44BE02"},
-  {n:72, name:"Skyblue Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/600299272_122182757048507013_6209965600455629180_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeEbokjl-J9YeKSNegMc3vjbkTc01JKBh-qRNzTUkoGH6jjGNfVR8QR_gglcaFGDbu4M0IKgUHG8AHB3AK_Np0f3&_nc_ohc=uqXAWfeggAYQ7kNvwGBzZWP&_nc_oc=AdreQlmVOMUkbKb6U5UrS0MmowZWOqpgzx9EoUZrC6IaIHyVzF78oMef18TgNvhgedE&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=yHYnrTQ1CFwTuT2AsBNRgQ&_nc_ss=7b2a8&oh=00_Af9TPoYtfblZh4Q3zdzGdLEJ-61C-WtwwhEGWtM1FtTseg&oe=6A44CD24"},
-  {n:73, name:"Snow Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/484901434_687394386956490_4314446287383334089_n.jpg?stp=dst-jpg_tt6&cstp=mx1166x1166&ctp=s1166x1166&_nc_cat=101&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeE7Hq24bDwxASUWLFZ6enZN8WLHyLkEMCrxYsfIuQQwKr1X80UIrQOfA2rqnr6w3zjR7OGAMeABMdL6gID-0mpq&_nc_ohc=yzRCoVW9nQkQ7kNvwHCJisX&_nc_oc=AdqgrQ6UdHCsH2Ds20DFqNby6O_NfmgwApaCfcl0ZtHKdC6xiopcHywK4rJQtyLj4ac&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=iA1SiTXuNEnA39Ltlcp4nQ&_nc_ss=7b2a8&oh=00_Af-CD28cukiERS68n1uIOgzc9j7W4ruCE1q0UkuOphnEVw&oe=6A44CEEC"},
-  {n:74, name:"SoFia Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/718618489_1316976853877621_1465366695929994928_n.jpg?stp=dst-jpg_tt6&cstp=mx540x540&ctp=s540x540&_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE9FvmcbW0Ih4y0OTPRzxERoAVk0vzk5OugBWTS_OTk6xKUxOBk0Guy_KMAzCDc9ZCQnE2o-2lBSK22G123TsbE&_nc_ohc=qLJxqhfkCDcQ7kNvwFWoovN&_nc_oc=AdoCK0u407h51YGpjmUUvpT8zyfGAx3EKxDRgP04WgG-b2oHl_hOCSmxrRDzJsrENdU&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=J6v2gfST1GL0HODfdqazDg&_nc_ss=7b2a8&oh=00_Af-crUgrVW5ZZDhyrkwNf2oKapO3cKar9tYrdWJ1JmX_7A&oe=6A44CD74"},
-  {n:75, name:"Suffer Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/731147161_122235029234113530_5121872004601398471_n.jpg?stp=dst-jpg_tt6&cstp=mx1476x1475&ctp=s1476x1475&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGPWrO-tsLziLRoL_y6BSJBLXyTTMFlr0EtfJNMwWWvQcRtsHkUVFl7hCKGXWRgC0dMz8NlkmVSAnqWjEdmABVr&_nc_ohc=NyFsBCcCTigQ7kNvwHxQEMg&_nc_oc=AdrBrWM1lZ26zVbHcJPHnubzt3Io_rfAKP9XgCCsREqd6JM9vptl6VpdAOgMJKxM5FY&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=F5hQa_cDvKWYo7hJ5mtMuw&_nc_ss=7b2a8&oh=00_Af97lZHgzPc8M5CER6lYlkdRC3H07dLVcnUMJm8YhyhkkQ&oe=6A44D5E0"},
-  {n:76, name:"Waja Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/485059709_576060912120462_3785961138968441862_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEZx_eJD6xMc3bvsVZOIl49yDtN32UaetrIO03fZRp62ubf1n42qATsiRF7ZakjTkJlz5qQJ2NGAw9pbUKsfUxJ&_nc_ohc=1s2NqsqRb1UQ7kNvwHTsfqk&_nc_oc=AdpgRhyFXgeK5N6RY39w_6GrtRhK0tm35q7O4Dn_VA0oG6jH9bQNq0xOsn0ygL6523c&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=TSUt72_RzwuIqbto1MI9sw&_nc_ss=7b2a8&oh=00_Af-hT_gMQq2itRDm107hamKG6uyvgt0Z6xiGRP8M-04p_A&oe=6A44D5E9"},
-  {n:77, name:"WarnYen Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/481764724_582009921503176_5145175853560479503_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEeCMgE_eopVrE2ep-BWl1PVF6kg5KwEHhUXqSDkrAQeJ1QvzAWIYhNdDptnwAleE5Chri2N7BU238aTvyV3wQH&_nc_ohc=0btbrZgW-0oQ7kNvwG0Jd1T&_nc_oc=Ado-NaQa7wQXf87K97X7o6ys4Z155iTsyrQwuR9S4rJ9LcuOEiWzF5enWk_nvO8qahM&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=fFewGFQUzQKLFk8ecsfsfw&_nc_ss=7b2a8&oh=00_Af8Y5VdxJbAPvT1S-R80gHwbbjsLrEQBbp4HDBjjjsFUVQ&oe=6A44DC45"},
-  {n:78, name:"Way Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/508011870_1247092683878623_5324952403330842574_n.jpg?stp=dst-jpg_tt6&cstp=mx1052x1052&ctp=s200x200&_nc_cat=101&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeEDvCTvhKGFIISnSSUEoflW7UFUR5qYXJ3tQVRHmphcnbD_TEUO5aaes7W3dUx10TFsakoQpVdHr-DoYwUm5rlj&_nc_ohc=iVJg31-1yxcQ7kNvwFZdLDv&_nc_oc=AdrsdBSKkhKj2UckDtLeVk_YAhIgAC6SqaNzCxfYmcqCRx79IHuObhbRWdzL6FwmvuE&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=9V8Jfms1C3wZCpQsKfjBDA&_nc_ss=7b2a8&oh=00_Af9sQEz7SnrgBiu9Ocg9BH7rsM4j_wirFM-16g8DB4k0GA&oe=6A44D241"},
-  {n:79, name:"Wayu Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/715890448_122210145368497321_182256720551552360_n.jpg?stp=dst-jpg_tt6&cstp=mx1122x1134&ctp=s200x200&_nc_cat=110&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHrBxb3k0UHVJRLx8YoPL-AqY4dpGSjCx2pjh2kZKMLHRZmiUVEQK1iey6TfeKHRbZNDZYld37EyZmarnM5uGcZ&_nc_ohc=3BuWhVcpCkMQ7kNvwE6G-Af&_nc_oc=AdqQaUFwDaebW0CtXW587qtbQa1o-zXd-pxAwZBu3Wo8bHftUyhowib-vI0YKQTjdPg&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=Z8en2qwSaSnownVqR5BJSQ&_nc_ss=7b2a8&oh=00_Af_RsBBGVGZnlUroEMQzShwlv4IZJt0UH7zRypJqYknLYQ&oe=6A44E475"},
-  {n:80, name:"Whitebear Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/514447471_735652942266678_3943217394794091489_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeH0hpPjA_ZM7oWrO33eBdnSvt3Qem_cHEa-3dB6b9wcRnL5nV4Plr93WJWCzlHJiPcT_egDogoh92kSrzrj1vlU&_nc_ohc=zQT7FxUSS_QQ7kNvwG2XKbb&_nc_oc=AdrT_mffcZ2aurL3pseE8OitWreoOczQyfpHKMeHOeR2rttV3z6XCASPsZdo3SHSLd4&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=rMMYkYdqjdfhfvj6-gPA7A&_nc_ss=7b2a8&oh=00_Af-agHJDHzM5LWlq9Q949AX2hnXWw_67QNpyxbfxJqdpFg&oe=6A44F110"},
-  {n:81, name:"Whitewo Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/461195061_1027626645681000_4716685952444628828_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFzbZkYLWMzVBTSBvTe8fpXM4tv1wEOchMzi2_XAQ5yE8VKtu82feADv8A4aQHajk5xXt1502AJShDxEezwLaLS&_nc_ohc=G-GflyGBSYQQ7kNvwFd5l3x&_nc_oc=Adr59EZ_cUZ9_KeNaJpuF9u53sWjN3nm2PbPePdvn0FOQuKLTw9qZeqMhQGB8d0SbZc&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=aGyQPoLNeVw0uMHHyGYayQ&_nc_ss=7b2a8&oh=00_Af_BwvpFLlBsZk_sk_cdfmwyzFD8jKrciQn4qocyLlwptw&oe=6A44BE70"},
-  {n:82, name:"Winter Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/721341074_931368396575448_1722377769900689159_n.jpg?stp=dst-jpg_tt6&cstp=mx1792x1792&ctp=s1792x1792&_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEvZT2-DXPLW1lUe2o804-AxmJDySUf1GPGYkPJJR_UYxJsk1q2ZrRhz6Rzx_5kja8iT2KtSt7KavY9UIFXD63w&_nc_ohc=5GbwXsUwDKUQ7kNvwH524LC&_nc_oc=AdrVYQTDwueA5v1AXLzBlJLHQGwpH9wQppVToqLQPitMMT_G9F00VdJQOhaplkXKDW0&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=wKfmQk35UBjdD-OGHxkk2g&_nc_ss=7b2a8&oh=00_Af_9OjgYqlV3lorGTQO9bymSprKSFbzbHi2_kpm2_iPauw&oe=6A44C110"},
-  {n:83, name:"Yuta Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-1/515372922_122146831376683750_8040165378972288215_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s200x200&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeE4VuEL211UQofouNw-AN6ch-_sAw2YlxOH7-wDDZiXE2VCOvgs6DhexsoHZVNyuX6sZsKR3WG0GyBCxWhoUGXA&_nc_ohc=Wk1ymf4Y2pwQ7kNvwFoEyK9&_nc_oc=AdoxHCwn6mq8k52I3Zjk5KW6BZhZ31TVKBbb4H-wk6Va9N5bgRHgaW4HGmhcdhX1AnQ&_nc_zt=24&_nc_ht=scontent.fphs4-1.fna&_nc_gid=HNBiOLYmZO6igkTIQKeEfg&_nc_ss=7b2a8&oh=00_Af_7IoFfhsqSZpu4VCgKrTg4boFrfhEMcPbUQLp3jOkdBA&oe=6A44E1A6"},
-  {n:84, name:"Zohan Lopez", img: "https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/625022946_878757538392584_6950016363387367169_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x2048&ctp=s2048x2048&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFJw0bl-LEgLoJVuH9CmSP8FaG68wDz5M0VobrzAPPkzUmSH-A_asXyxAH3a1nTFdFMuabBVWje13FySyu_u9xw&_nc_ohc=C5ONWe0Z8twQ7kNvwF7JMlQ&_nc_oc=AdpVmCuC7DhrOQP1knaw1i1MaaUeK9LHCbISObLWUeWWw9PTa7e0w_oG8TxjSOXbQKw&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=bVunAwE6BDV3waZ1ihxX5A&_nc_ss=7b2a8&oh=00_Af-TN7F-N7r2d1dwClp6u_eU5PeYaxZYxrt4UfDv9vijbw&oe=6A44CB88"}
-];
-  
 function getInitials(name) {
-  const parts = name.trim().split(' ');
-  return parts.length >= 2 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.slice(0,2).toUpperCase();
+  const p = (name||'').trim().split(' ');
+  return p.length >= 2 ? (p[0][0]+p[1][0]).toUpperCase() : (name||'??').slice(0,2).toUpperCase();
 }
 
-const grid = document.getElementById('membersGrid');
-const allSearchable = [founder, ...leaders, ...members];
-  
-function makeCard(m) {
-  const fbLinks = {
-    // Founder
-    "Smith Lopez": "https://www.facebook.com/SmithLopezX",
-
-    // Leaders
-    "Alex Lopez": "https://www.facebook.com/profile.php?id=100093201550801",
-    "Bank Lopez": "https://www.facebook.com/banklopez1",
-    "Cgae Lopez": "https://www.facebook.com/CgaeLopez",
-    "Charlesz Lopez": "https://www.facebook.com/Charl.Lopezz",
-    "Ez Black": "https://www.facebook.com/ez.black.9638",
-    "Finver Lopez": "https://www.facebook.com/finver.lopez",
-    "Joke Lopez": "https://www.facebook.com/joke.burapha.2024",
-    "Oneshine Lopez": "https://www.facebook.com/oneshine.lopez.9",
-    "PingPing Lopez": "https://www.facebook.com/pingpinglopezgirl",
-    "Ray Lopez": "https://www.facebook.com/ImRayLopez",
-    "Srifer Lopez": "https://www.facebook.com/SriferLopez",
-    "Superballz Lopez": "https://www.facebook.com/superballz.knx",
-
-    // Members
-    "Armuay Lopez": "https://www.facebook.com/ArmuayLopez46",
-    "Ashix Lopez": "https://www.facebook.com/JowtopX",
-    "Beary Lopez": "https://www.facebook.com/beary.lopez",
-    "Bingsu Lopez": "https://www.facebook.com/bingsu.lopez",
-    "BxngCos Lopez": "https://www.facebook.com/bxngcos.tuathep",
-    "C Lopez": "https://www.facebook.com/profile.php?id=100093295104024",
-    "Catcher Lopez": "https://www.facebook.com/Ccatcher.Lopez",
-    "Cherlyn Lopez": "https://www.facebook.com/cherlyn.lopez.2024",
-    "Circe Lopez": "https://www.facebook.com/circe.lopez.371792",
-    "Dampeer Lopez": "https://www.facebook.com/dam.dampeer",
-    "Demi Lopez": "https://www.facebook.com/demi.lopez.582725",
-    "Dida Lopez": "https://www.facebook.com/dida.lopez.2025",
-    "Emma Lopez": "https://www.facebook.com/emma.871225",
-    "Emblem Lopez": "https://www.facebook.com/emblem.lopez.09",
-    "Errxr Lopez": "https://www.facebook.com/ErrxrLopez",
-    "Ezekiel Lopez": "https://www.facebook.com/ezekiel.excel.2000",
-    "Faye Lopez": "https://www.facebook.com/Faye.Lopez999",
-    "Felling Lopez": "https://www.facebook.com/felling.zion",
-    "GamGlom Lopez": "https://www.facebook.com/gamglom.wiwongkul",
-    "Giselle Lopez": "https://www.facebook.com/GisellePhuyingyai",
-    "HanaNa Lopez": "https://www.facebook.com/hanana.lopez",
-    "Hell Lopez": "https://www.facebook.com/hell.Mercelli",
-    "Jade Lopez": "https://www.facebook.com/ijade.xlpz",
-    "Jaylin Lopez": "https://www.facebook.com/JaylinDST",
-    "Jaynine Lopez": "https://www.facebook.com/alwayzbewithme",
-    "Jele Lopez": "https://www.facebook.com/jele.jle",
-    "Josave Lopez": "https://www.facebook.com/JosaveLopez",
-    "JRs Lopez": "https://www.facebook.com/jrslopezz",
-    "Kenzo Lopez": "https://www.facebook.com/kenzo.lopez.729924",
-    "Kevin Lopez": "https://www.facebook.com/kevinnlpx",
-    "Koko Lopez": "https://www.facebook.com/koko.Lopez11",
-    "Kumo Lopez": "https://www.facebook.com/kumo.sweetz",
-    "Lee Lopez": "https://www.facebook.com/leel0pez",
-    "Loma Lopez": "https://www.facebook.com/loma.rangsit",         // ช.
-    "Loma Lopez ": "https://www.facebook.com/Lomaxyz",        // ญ.
-    "Luca Lopez": "https://www.facebook.com/phaiphibut.luca",
-    "Maraa Lopez": "https://www.facebook.com/ma.raa.820346",
-    "Mia Lopez": "https://www.facebook.com/mia.yapyuuyee",
-    "Miguel Lopez": "https://www.facebook.com/miguel.lopez.458685",
-    "Munmuang Lopez": "https://www.facebook.com/munmuang.lopez",
-    "MyMm Lopez": "https://www.facebook.com/mymm.lopez",
-    "Nami Lopez": "https://www.facebook.com/nami.hozen",
-    "Natthawut Lopez": "https://www.facebook.com/natthawut.cinwang",
-    "Noah Lopez": "https://www.facebook.com/noahlahnpxtims",
-    "Nozomi Lopez": "https://www.facebook.com/nozomi.znine",
-    "Pipo Lopez": "https://www.facebook.com/pipo.lopez.736490",
-    "Puxd Lopez": "https://www.facebook.com/puxd.lopez",
-    "Rayleigh Lopez": "https://www.facebook.com/rey.li.hlan.pa.tim",
-    "ReiJi Lopez": "https://www.facebook.com/AriavonReiJiAsunaaa",
-    "Reindeer Lopez": "https://www.facebook.com/reindeer.un",
-    "Remie Lopez": "https://www.facebook.com/remie.realgod",
-    "Rose Lopez": "https://www.facebook.com/rosemary.winters.99208",
-    "Ruben Lopez": "https://www.facebook.com/profile.php?id=61583346274772",
-    "SaiMhok Lopez": "https://www.facebook.com/saimhok.lopez",
-    "Saki Lopez": "https://www.facebook.com/mirin.da.315428",
-    "Sanson Lopez": "https://www.facebook.com/sanson.v.mueang.b01",
-    "Seiyngsai Lopez": "https://www.facebook.com/seiyngsai.lopez",
-    "Sinny Lopez": "https://www.facebook.com/sinny.lopez.2024",
-    "Skyblue Lopez": "https://www.facebook.com/skyblue.Lopez",
-    "Snow Lopez": "https://www.facebook.com/SnowLopez04",
-    "SoFia Lopez": "https://www.facebook.com/sofia.lopez.233115",
-    "Suffer Lopez": "https://www.facebook.com/suffer.wlzard",
-    "Waja Lopez": "https://www.facebook.com/waja.lopez",
-    "WarnYen Lopez": "https://www.facebook.com/warnyen.lopez",
-    "Way Lopez": "https://www.facebook.com/WayWay867",
-    "Wayu Lopez": "https://www.facebook.com/wayu.shimura",
-    "Whitebear Lopez": "https://www.facebook.com/whitebear.lopez",
-    "Whitewo Lopez": "https://www.facebook.com/wipeout.white.2024",
-    "Winter Lopez": "https://www.facebook.com/w1nter.lopez",
-    "Yuta Lopez": "https://www.facebook.com/yuta.lopez.425928",
-    "Zohan Lopez": "https://www.facebook.com/zohan.john.2024"
-  };
-  const fbUrl = fbLinks[m.name] || `https://www.facebook.com/search/people/?q=${encodeURIComponent(m.name)}`;
-  const card = document.createElement('div');
+function makeCard(m, extraClass) {
+  extraClass = extraClass || '';
   const isFounder = m.role === 'founder';
   const isLeader = m.role === 'leader';
-  card.className = 'member-card' + (isFounder ? ' founder' : isLeader ? ' co-leader' : '');
-  card.dataset.name = m.name.toLowerCase();
-  
-  const badge = isFounder
-    ? `<div class="role-badge badge-founder">⭐ FOUNDER ⭐</div>`
-    : isLeader
-    ? `<div class="role-badge badge-leader">👑 LEADER</div>`
-    : ``; 
-    
+  const fbUrl = m.facebook || ('https://www.facebook.com/search/people/?q=' + encodeURIComponent(m.name));
   const initials = getInitials(m.name);
-  const avatarContent = m.img && m.img.trim() !== "" 
-    ? `<img src="${m.img}" alt="${m.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.insertAdjacentText('afterend','${initials}')">`
+  const badge = isFounder
+    ? '<div class="role-badge badge-founder">&#11088; FOUNDER &#11088;</div>'
+    : isLeader
+    ? '<div class="role-badge badge-leader">&#128081; LEADER</div>'
+    : '<div class="member-num">#' + String(m.n).padStart(2,'0') + '</div>';
+  const avatarInner = m.img
+    ? '<img src="' + m.img + '" alt="' + m.name + '" onerror="this.style.display=\'none\'">'
     : initials;
-    
-  card.innerHTML = `
-    ${badge}
-    <div class="member-avatar">${avatarContent}</div>
-    <div class="member-name">${m.name}</div>
-    <a class="fb-btn" href="${fbUrl}" target="_blank" rel="noopener">
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="#7b5fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-      Facebook
-    </a>
-  `;
+  const card = document.createElement('div');
+  card.className = ('member-card ' + extraClass).trim();
+  card.dataset.name = (m.name||'').toLowerCase();
+  card.innerHTML = badge +
+    '<div class="member-avatar">' + avatarInner + '</div>' +
+    '<div class="member-name">' + m.name + '</div>' +
+    '<a class="fb-btn" href="' + fbUrl + '" target="_blank" rel="noopener">' +
+    '<svg width="10" height="10" viewBox="0 0 24 24" fill="#7b5fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>' +
+    'Facebook</a>';
   return card;
 }
 
-grid.appendChild(makeCard(founder));
-
-const leaderBox = document.createElement('div');
-leaderBox.className = 'leaders-section';
-leaderBox.innerHTML = `<div class="leaders-section-title">Leaders</div>`;
-const leaderInner = document.createElement('div');
-leaderInner.className = 'leaders-inner';
-leaders.forEach(m => leaderInner.appendChild(makeCard(m)));
-leaderBox.appendChild(leaderInner);
-grid.appendChild(leaderBox);
-
-const memberBox = document.createElement('div');
-memberBox.className = 'leaders-section';
-memberBox.style.borderColor = 'rgba(123,95,255,0.15)';
-memberBox.style.background = 'rgba(123,95,255,0.03)';
-memberBox.innerHTML = `<div class="leaders-section-title" style="color:rgba(201,184,255,0.5)">Members</div>`;
-const memberInner = document.createElement('div');
-memberInner.className = 'leaders-inner';
-members.forEach(m => memberInner.appendChild(makeCard(m)));
-memberBox.appendChild(memberInner);
-grid.appendChild(memberBox);
+async function loadMembers() {
+  const container = document.getElementById('membersContainer');
+  try {
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+    const rows = json.table.rows;
+    let founders = [], leaders = [], members = [];
+    let num = 1;
+    rows.forEach(function(row) {
+      const c = row.c;
+      const name = (c[0] && c[0].v) ? c[0].v.toString().trim() : '';
+      const role = (c[1] && c[1].v) ? c[1].v.toString().trim().toLowerCase() : 'member';
+      const img  = (c[2] && c[2].v) ? c[2].v.toString().trim() : '';
+      const facebook = (c[3] && c[3].v) ? c[3].v.toString().trim() : '';
+      if (!name) return;
+      const m = {n: num++, name: name, role: role, img: img, facebook: facebook};
+      if (role === 'founder') founders.push(m);
+      else if (role === 'leader') leaders.push(m);
+      else members.push(m);
+    });
+    const az = function(a, b) { return a.name.localeCompare(b.name); };
+    leaders.sort(az);
+    members.sort(az);
+    allMembers = founders.concat(leaders).concat(members);
+    const total = allMembers.length;
+    document.getElementById('liveCount').textContent = total + ' MEMBERS';
+    document.getElementById('memberDesc').textContent = total + ' คนที่เป็นส่วนหนึ่งของ Family Lopez';
+    document.getElementById('resultCount').textContent = 'แสดง ' + total + ' / ' + total + ' คน';
+    document.getElementById('searchWrap').style.display = '';
+    const grid = document.createElement('div');
+    grid.className = 'members-grid';
+    grid.id = 'membersGrid';
+    founders.forEach(function(m) { grid.appendChild(makeCard(m, 'founder')); });
+    if (leaders.length) {
+      const box = document.createElement('div');
+      box.className = 'group-section leaders';
+      box.innerHTML = '<div class="group-title">&#128081; Leaders</div>';
+      const inner = document.createElement('div');
+      inner.className = 'group-inner';
+      leaders.forEach(function(m) { inner.appendChild(makeCard(m, 'co-leader')); });
+      box.appendChild(inner);
+      grid.appendChild(box);
+    }
+    if (members.length) {
+      const box = document.createElement('div');
+      box.className = 'group-section members-group';
+      box.innerHTML = '<div class="group-title">&#129306; Members</div>';
+      const inner = document.createElement('div');
+      inner.className = 'group-inner';
+      members.forEach(function(m) { inner.appendChild(makeCard(m, '')); });
+      box.appendChild(inner);
+      grid.appendChild(box);
+    }
+    container.innerHTML = '';
+    container.appendChild(grid);
+  } catch(err) {
+    container.innerHTML = '<div class="error-state">&#9888;&#65039; โหลดข้อมูลไม่ได้<br><br>กรุณาตรวจสอบว่า Google Sheets ตั้งค่าเป็น<br><strong>"Anyone with the link &rarr; Viewer"</strong> แล้ว<br><br><small>' + err.message + '</small></div>';
+    document.getElementById('liveCount').textContent = 'โหลดไม่ได้';
+  }
+}
 
 function filterMembers() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const grid = document.getElementById('membersGrid');
+  if (!grid) return;
   let count = 0;
-
-  const founderCard = grid.querySelector('.member-card.founder');
-  const founderMatch = founder.name.toLowerCase().includes(q);
-  founderCard.classList.toggle('hidden', !founderMatch);
-  if (founderMatch) count++;
-
-  const leaderCards = leaderInner.querySelectorAll('.member-card');
-  let leaderVisible = 0;
-  leaderCards.forEach(c => {
+  grid.querySelectorAll('.member-card.founder').forEach(function(c) {
     const show = c.dataset.name.includes(q);
     c.classList.toggle('hidden', !show);
-    if (show) { count++; leaderVisible++; }
+    if (show) count++;
   });
-  leaderBox.style.display = leaderVisible === 0 ? 'none' : '';
-
-  const memberCards = memberInner.querySelectorAll('.member-card');
-  let memberVisible = 0;
-  memberCards.forEach(c => {
-    const show = c.dataset.name.includes(q);
-    c.classList.toggle('hidden', !show);
-    if (show) { count++; memberVisible++; }
+  grid.querySelectorAll('.group-section').forEach(function(box) {
+    let visible = 0;
+    box.querySelectorAll('.member-card').forEach(function(c) {
+      const show = c.dataset.name.includes(q);
+      c.classList.toggle('hidden', !show);
+      if (show) { count++; visible++; }
+    });
+    box.style.display = visible === 0 ? 'none' : '';
   });
-  memberBox.style.display = memberVisible === 0 ? 'none' : '';
-
-  document.getElementById('resultCount').textContent = `แสดง ${count} / ${allSearchable.length} คน`;
+  document.getElementById('resultCount').textContent = 'แสดง ' + count + ' / ' + allMembers.length + ' คน';
 }
 
-/* =======================================================
-   ระบบเสียงเพลงพื้นหลังอัตโนมัติ (YOUTUBE BACKGROUND MUSIC)
-   ======================================================= */
-const YOUTUBE_VIDEO_ID = 'wXOdV6bd5VM'; 
-const MUSIC_VOLUME = 2; 
-
 var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+tag.src = 'https://www.youtube.com/iframe_api';
+document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
-    height: '0', width: '0',
-    videoId: YOUTUBE_VIDEO_ID,
-    playerVars: {
-      'autoplay': 0, 'controls': 0, 'loop': 1,
-      'playlist': YOUTUBE_VIDEO_ID, 'rel': 0
-    },
-    events: { 'onReady': onPlayerReady }
+    height: '0', width: '0', videoId: 'wXOdV6bd5VM',
+    playerVars: {autoplay:0, controls:0, loop:1, playlist:'wXOdV6bd5VM', rel:0},
+    events: {onReady: function(e){ e.target.setVolume(2); }}
   });
 }
-
-function onPlayerReady(event) {
-  event.target.setVolume(MUSIC_VOLUME);
-}
-
-// ฟังก์ชันทำงานเมื่อกดปุ่ม Enter Family
 function enterSite() {
-  // ซ่อนหน้า Welcome overlay แบบเนียน ๆ ด้วย Fade out
   document.getElementById('enterOverlay').classList.add('fade-out');
-  
-  // สั่งให้เครื่องเล่นเพลงทำงานทันที
-  if (player && typeof player.playVideo === 'function') {
-    player.playVideo();
-  }
+  if (player && typeof player.playVideo === 'function') player.playVideo();
 }
+
+loadMembers();
 </script>
 </body>
 </html>
