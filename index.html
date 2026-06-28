@@ -234,7 +234,7 @@ async function loadMembers() {
     if (leaders.length) {
       const box = document.createElement('div');
       box.className = 'group-section leaders';
-      box.innerHTML = '<div class="group-title">&👑 Leaders 👑</div>';
+      box.innerHTML = '<div class="group-title">👑 Leaders 👑</div>';
       const inner = document.createElement('div');
       inner.className = 'group-inner';
       leaders.forEach(function(m) { inner.appendChild(makeCard(m, 'co-leader')); });
