@@ -22,14 +22,29 @@
     .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
     .nav-links a:hover{color:var(--purple-light)}
 
-    /*  BACKGROUND  */
+    /* HERO (HEADER) SECTION WITH BACKGROUND IMAGE  */
     .hero{text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
-    .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,63,255,.10) 0%,rgba(10,10,15,.6) 70%);pointer-events:none}
     
-    .hero-tag{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(123,95,255,.35);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem;font-family:'Space Mono',monospace;position:relative;z-index:1}
-    .hero-title{font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1;letter-spacing:-2px;margin-bottom:1rem;position:relative;z-index:1}
+    /* ปรับขนาดรูปพื้นหลังให้ใหญ่ขึ้นตรงนี้ */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/676590618_1555160719949684_2155220416663153675_n.png?stp=dst-png&cstp=mx2052x800&ctp=s2052x800&_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEjILLBKH7oaBwCMI1CHhZblkoIVz0QPtuWSghXPRA-24l8d_9oApteQjCIBh3g04lP4sIuA8Qtet8geuvd2y7k&_nc_ohc=DxSA5fT5tTEQ7kNvwGdUE0r&_nc_oc=AdpKHxzZhEFOUDnz7DpBC6MHmiX2mcd_0nodWODV-ZvPCkwQwfEXWnayyDHLiot93fA&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=K9KvAMcCQ4D3aLQiq9s7zA&_nc_ss=7b2a8&oh=00_Af8cPzMb_I5SciWr3vM4w9w2eoYqzqG8W4s-Um5vVw3mEw&oe=6A468960");
+      background-size: 750px auto; /* ขยายขนาดความกว้างขึ้นมาเป็น 750px (สามารถปรับค่าตามใจชอบได้เลยครับ) */
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.15; /* ปรับระดับความจาง (0.0 - 1.0) */
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,63,255,.10) 0%,rgba(10,10,15,.6) 70%);pointer-events:none;z-index: 1;}
+    
+    .hero-tag{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(123,95,255,.35);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem;font-family:'Space Mono',monospace;position:relative;z-index:2}
+    .hero-title{font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1;letter-spacing:-2px;margin-bottom:1rem;position:relative;z-index:2}
     .hero-title span{background:linear-gradient(135deg,var(--purple-light),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .live-counter{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;background:rgba(123,95,255,.08);border:1px solid rgba(123,95,255,.2);border-radius:30px;padding:8px 20px;margin-top:1rem;font-family:'Space Mono',monospace;font-size:13px;color:var(--purple-light)}
+    .live-counter{position:relative;z-index:2;display:inline-flex;align-items:center;gap:10px;background:rgba(123,95,255,.08);border:1px solid rgba(123,95,255,.2);border-radius:30px;padding:8px 20px;margin-top:1rem;font-family:'Space Mono',monospace;font-size:13px;color:var(--purple-light)}
     .live-dot{width:8px;height:8px;border-radius:50%;background:#4cff91;animation:pulse 1.5s infinite}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
     .divider{height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent);margin:0 2rem}
@@ -286,7 +301,7 @@ function filterMembers() {
 
 // ====== CONTACT & PARTNERS (realtime) ======
 const FB_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
-const DC_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>';
+const DC_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>';
 
 function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];}); }
 
