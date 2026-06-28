@@ -7,409 +7,90 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0a0a0f;--surface:#111118;--border:#ffffff0d;--purple:#7b5fff;--purple-light:#c9b8ff;--text:#e8e8f0;--muted:#666;--dim:#444}
+    html{scroll-behavior:smooth}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    .enter-overlay{position:fixed;inset:0;background:#060609;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity .5s,visibility .5s}
+    .enter-overlay.fade-out{opacity:0;visibility:hidden;pointer-events:none}
+    .enter-btn{background:transparent;border:2px solid var(--purple);color:#fff;font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:4px;padding:15px 40px;border-radius:30px;cursor:pointer;box-shadow:0 0 15px rgba(123,95,255,.2);transition:all .3s;text-transform:uppercase}
+    .enter-btn:hover{background:var(--purple);box-shadow:0 0 30px rgba(123,95,255,.6);transform:scale(1.05)}
+    .enter-subtext{font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);margin-top:15px;letter-spacing:1px}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 2rem;border-bottom:1px solid var(--border);background:rgba(10,10,15,.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
+    .nav-logo{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--purple-light);letter-spacing:2px}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+    .nav-links a:hover{color:var(--purple-light)}
 
-    :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --border: #ffffff0d;
-      --purple: #7b5fff;
-      --purple-light: #c9b8ff;
-      --text: #e8e8f0;
-      --muted: #666;
-      --dim: #444;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ==========================================
-       หน้า ENTER SITE (หน้ากดเข้าเว็บเพื่อเปิดเพลง)
-       ========================================== */
-    .enter-overlay {
-      position: fixed;
-      inset: 0;
-      background: #060609;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    .enter-overlay.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-    .enter-btn {
-      background: transparent;
-      border: 2px solid var(--purple);
-      color: #fff;
-      font-family: 'Space Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      padding: 15px 40px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(123,95,255,0.2);
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-    }
-    .enter-btn:hover {
-      background: var(--purple);
-      box-shadow: 0 0 30px rgba(123,95,255,0.6);
-      transform: scale(1.05);
-    }
-    .enter-subtext {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--dim);
-      margin-top: 15px;
-      letter-spacing: 1px;
-    }
-
-    /* NAV */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--purple-light);
-      letter-spacing: 2px;
-    }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--purple-light); }
-
-    /* HERO */
-    .hero {
-      text-align: center;
-      padding: 5rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('https://scontent.fphs4-1.fna.fbcdn.net/v/t39.30808-6/676590618_1555160719949684_2155220416663153675_n.png?stp=dst-png&cstp=mx2052x800&ctp=s2052x800&_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEjILLBKH7oaBwCMI1CHhZblkoIVz0QPtuWSghXPRA-24l8d_9oApteQjCIBh3g04lP4sIuA8Qtet8geuvd2y7k&_nc_ohc=DxSA5fT5tTEQ7kNvwGdUE0r&_nc_oc=AdpKHxzZhEFOUDnz7DpBC6MHmiX2mcd_0nodWODV-ZvPCkwQwfEXWnayyDHLiot93fA&_nc_zt=23&_nc_ht=scontent.fphs4-1.fna&_nc_gid=qZPI_bzgrJDG43TBzVIw-g&_nc_ss=7b2a8&oh=00_Af9BNix7KGq2cMWigKGcjrFWlsCGYWU5GVaguo-l8h-YMw&oe=6A44C760');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.08;
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(108,63,255,0.10) 0%, rgba(10,10,15,0.6) 70%);
-      pointer-events: none;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--purple);
-      border: 1px solid rgba(123,95,255,0.35);
-      padding: 5px 16px;
-      border-radius: 20px;
-      margin-bottom: 1.5rem;
-      font-family: 'Space Mono', monospace;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 700;
-      line-height: 1.0;
-      letter-spacing: -2px;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-title span {
-      background: linear-gradient(135deg, var(--purple-light), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* DIVIDER */
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-      margin: 0 2rem;
-    }
-
-    /* SECTION */
-    .section {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .section-title {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
-    }
-    .section-desc {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 1.75rem;
-    }
-
-    /* SEARCH */
-    .search-wrap { position: relative; margin-bottom: 1rem; }
-    .search-wrap svg {
-      position: absolute; left: 14px; top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-    .search-wrap input {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px 12px 42px;
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .search-wrap input:focus { border-color: rgba(123,95,255,0.4); }
-    .search-wrap input::placeholder { color: #3a3a4a; }
-    .result-count {
-      font-size: 12px;
-      color: #3a3a4a;
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 1.25rem;
-    }
-
-    /* MEMBERS GRID */
-    .members-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 10px;
-    }
-    .member-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.1rem 0.75rem;
-      text-align: center;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .member-card:hover {
-      border-color: rgba(123,95,255,0.4);
-      transform: translateY(-2px);
-    }
-    .member-card.hidden { display: none !important; }
-
-    /* FOUNDER */
-    .member-card.founder {
-      border-color: rgba(255,199,0,0.45);
-      background: linear-gradient(145deg, #111118, #1a1608);
-      grid-column: 1 / -1;
-    }
-    .member-card.founder .member-avatar {
-      width: 64px; height: 64px;
-      font-size: 20px;
-      background: linear-gradient(135deg, #a07800, #ffd000);
-      color: #1a1200;
-    }
-    .member-card.founder .member-name { font-size: 16px; }
-
-    /* LEADER & MEMBER GROUP BOXES */
-    .leaders-section {
-      grid-column: 1 / -1;
-      background: rgba(255,199,0,0.04);
-      border: 1px solid rgba(255,199,0,0.15);
-      border-radius: 14px;
-      padding: 1.25rem;
-      margin-bottom: 10px;
-    }
-    .leaders-section-title {
-      font-size: 11px;
-      font-family: 'Space Mono', monospace;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: rgba(255,208,0,0.6);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .leaders-inner {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 10px;
-    }
-    .member-card.co-leader {
-      border-color: rgba(255,199,0,0.2);
-      background: rgba(255,208,0,0.02);
-    }
-    .member-card.co-leader .member-avatar {
-      background: linear-gradient(135deg, #5a4a00, #a07800);
-      color: #ffd000;
-    }
-    .member-card.co-leader:hover { border-color: rgba(255,199,0,0.45); }
-
-    /* BADGE */
-    .role-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      font-family: 'Space Mono', monospace;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-    }
-    .badge-founder {
-      color: #ffd000;
-      background: rgba(255,208,0,0.12);
-      border: 1px solid rgba(255,208,0,0.35);
-    }
-    .badge-leader {
-      color: rgba(255,208,0,0.7);
-      background: rgba(255,208,0,0.07);
-      border: 1px solid rgba(255,208,0,0.2);
-    }
+    /*  BACKGROUND  */
+    .hero{text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+    .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,63,255,.10) 0%,rgba(10,10,15,.6) 70%);pointer-events:none}
     
-    /* AVATAR STYLE */
-    .member-avatar {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3a2a7a, #6a3fff);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 0.6rem;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--purple-light);
-      font-family: 'Space Mono', monospace;
-      overflow: hidden;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.05);
-    }
-    .member-avatar img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    
-    .member-name {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .fb-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      color: var(--purple);
-      border: 1px solid rgba(123,95,255,0.25);
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-family: 'Space Mono', monospace;
-      transition: background 0.2s;
-    }
-    .fb-btn:hover { background: rgba(123,95,255,0.12); }
-
-    /* CONTACT & PARTNERS GRID */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 500px) {
-      .contact-grid { grid-template-columns: 1fr; }
-      .members-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-    }
-    .social-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .social-card:hover { transform: translateY(-2px); }
-    .social-card.fb:hover { border-color: rgba(24,119,242,0.4); }
-    .social-card.discord:hover { border-color: rgba(88,101,242,0.4); }
-    .social-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .social-icon.fb { background: rgba(24,119,242,0.12); }
-    .social-icon.discord { background: rgba(88,101,242,0.12); }
-    .social-info { flex: 1; }
-    .social-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-    .social-handle { font-size: 11px; color: var(--dim); font-family: 'Space Mono', monospace; }
-    .social-arrow { color: #2a2a3a; font-size: 16px; transition: color 0.2s; }
-    .social-card:hover .social-arrow { color: var(--purple); }
-
-    /* STATE ANIMATION */
-    .loading-state, .error-state {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 14px;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.04);
-      padding: 2rem;
-      text-align: center;
-      font-size: 12px;
-      color: #2a2a3a;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-    }
-    footer span { color: var(--purple); }
+    .hero-tag{display:inline-block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);border:1px solid rgba(123,95,255,.35);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem;font-family:'Space Mono',monospace;position:relative;z-index:1}
+    .hero-title{font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1;letter-spacing:-2px;margin-bottom:1rem;position:relative;z-index:1}
+    .hero-title span{background:linear-gradient(135deg,var(--purple-light),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .live-counter{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;background:rgba(123,95,255,.08);border:1px solid rgba(123,95,255,.2);border-radius:30px;padding:8px 20px;margin-top:1rem;font-family:'Space Mono',monospace;font-size:13px;color:var(--purple-light)}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:#4cff91;animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent);margin:0 2rem}
+    .section{padding:4rem 2rem;max-width:1000px;margin:0 auto}
+    .section-title{font-size:28px;font-weight:700;margin-bottom:.5rem;letter-spacing:-.5px}
+    .section-desc{color:var(--muted);font-size:14px;margin-bottom:1.75rem}
+    .loading-state{text-align:center;padding:3rem;color:var(--muted);font-family:'Space Mono',monospace;font-size:13px}
+    .loading-spinner{width:30px;height:30px;border:2px solid rgba(123,95,255,.2);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-state{text-align:center;padding:2rem;color:#ff6b6b;font-family:'Space Mono',monospace;font-size:12px;border:1px solid rgba(255,107,107,.2);border-radius:12px;background:rgba(255,107,107,.05)}
+    .search-wrap{position:relative;margin-bottom:1rem}
+    .search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none}
+    .search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px 12px 42px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+    .search-wrap input:focus{border-color:rgba(123,95,255,.4)}
+    .search-wrap input::placeholder{color:#3a3a4a}
+    .result-count{font-size:12px;color:#3a3a4a;font-family:'Space Mono',monospace;margin-bottom:1.25rem}
+    .members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+    .member-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem .75rem;text-align:center;transition:border-color .2s,transform .15s}
+    .member-card:hover{border-color:rgba(123,95,255,.4);transform:translateY(-2px)}
+    .member-card.hidden{display:none}
+    .member-card.founder{border-color:rgba(255,199,0,.45);background:linear-gradient(145deg,#111118,#1a1608);grid-column:1/-1}
+    .member-card.founder .member-avatar{width:64px;height:64px;font-size:20px;background:linear-gradient(135deg,#a07800,#ffd000);color:#1a1200}
+    .member-card.founder .member-name{font-size:16px}
+    .group-section{grid-column:1/-1;border-radius:14px;padding:1rem}
+    .group-section.leaders{background:rgba(255,199,0,.04);border:1px solid rgba(255,199,0,.15)}
+    .group-section.members-group{background:rgba(123,95,255,.03);border:1px solid rgba(123,95,255,.15)}
+    .group-title{font-size:10px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.75rem}
+    .group-section.leaders .group-title{color:rgba(255,208,0,.6)}
+    .group-section.members-group .group-title{color:rgba(201,184,255,.5)}
+    .group-inner{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+    .member-card.co-leader{border-color:rgba(255,199,0,.2);background:rgba(255,208,0,.02)}
+    .member-card.co-leader .member-avatar{background:linear-gradient(135deg,#5a4a00,#a07800);color:#ffd000}
+    .member-card.co-leader:hover{border-color:rgba(255,199,0,.45)}
+    .role-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+    .badge-founder{color:#ffd000;background:rgba(255,208,0,.12);border:1px solid rgba(255,208,0,.35)}
+    .badge-leader{color:rgba(255,208,0,.7);background:rgba(255,208,0,.07);border:1px solid rgba(255,208,0,.2)}
+    .member-num{font-size:10px;color:#333;font-family:'Space Mono',monospace;margin-bottom:4px}
+    .member-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#3a2a7a,#6a3fff);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem;font-size:14px;font-weight:700;color:var(--purple-light);font-family:'Space Mono',monospace;overflow:hidden;border:2px solid rgba(255,255,255,.05)}
+    .member-avatar img{width:100%;height:100%;object-fit:cover}
+    .member-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.3}
+    .fb-btn{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--purple);border:1px solid rgba(123,95,255,.25);padding:4px 10px;border-radius:20px;text-decoration:none;font-family:'Space Mono',monospace;transition:background .2s}
+    .fb-btn:hover{background:rgba(123,95,255,.12)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:500px){.contact-grid{grid-template-columns:1fr}.members-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}}
+    .social-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;text-decoration:none;transition:border-color .2s,transform .15s}
+    .social-card:hover{transform:translateY(-2px)}
+    .social-card.fb:hover{border-color:rgba(24,119,242,.4)}
+    .social-card.discord:hover{border-color:rgba(88,101,242,.4)}
+    .social-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .social-icon.fb{background:rgba(24,119,242,.12)}
+    .social-icon.discord{background:rgba(88,101,242,.12)}
+    .social-info{flex:1;min-width:0}
+    .social-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .social-handle{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .social-arrow{color:#2a2a3a;font-size:16px;transition:color .2s}
+    .social-card:hover .social-arrow{color:var(--purple)}
+    footer{border-top:1px solid rgba(255,255,255,.04);padding:2rem;text-align:center;font-size:12px;color:#2a2a3a;font-family:'Space Mono',monospace;letter-spacing:1px}
+    footer span{color:var(--purple)}
   </style>
 </head>
 <body>
-
-<div id="youtube-player"></div>
 
 <div class="enter-overlay" id="enterOverlay">
   <button class="enter-btn" onclick="enterSite()">Enter TO MEMBERS SITE</button>
@@ -428,24 +109,24 @@
 <section class="hero">
   <div class="hero-tag">FAMILY LOPEZ</div>
   <h1 class="hero-title">We Are<br><span>LOPEZ</span></h1>
+  <div class="live-counter">
+    <div class="live-dot"></div>
+    <span id="liveCount">กำลังโหลด...</span>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <div class="section" id="members">
   <h2 class="section-title">สมาชิกทั้งหมด</h2>
-  <p class="section-desc" id="memberDesc">กำลังโหลดข้อมูลจำนวนสมาชิก...</p>
-
-  <div class="search-wrap">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
+  <p class="section-desc" id="memberDesc">กำลังโหลดข้อมูลจาก Google Sheets...</p>
+  <div class="search-wrap" id="searchWrap" style="display:none">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="searchInput" placeholder="ค้นหาสมาชิก..." oninput="filterMembers()">
   </div>
-  <div class="result-count" id="resultCount">กำลังโหลด...</div>
-
-  <div class="members-grid" id="membersGrid">
-    <div class="loading-state" style="grid-column: 1/-1;">กำลังโหลดรายชื่อแบบ Real-time...</div>
+  <div class="result-count" id="resultCount"></div>
+  <div id="membersContainer">
+    <div class="loading-state"><div class="loading-spinner"></div>กำลังดึงข้อมูลสมาชิก...</div>
   </div>
 </div>
 
@@ -455,244 +136,226 @@
   <h2 class="section-title">ติดต่อเรา</h2>
   <p class="section-desc">ตามหาพวกเราได้ทาง Fanpage และ Discord</p>
   <div class="contact-grid" id="contactContainer">
-    <div class="loading-state" style="grid-column: 1/-1;">กำลังโหลดข้อมูลติดต่อ...</div>
+    <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>กำลังดึงข้อมูลช่องทางติดต่อ...</div>
   </div>
 </div>
 
-<hr style="border: 0; height: 1px; background: rgba(255, 255, 255, 0.08); margin-top: -20px; margin-bottom: 20px;">
+<hr style="border:0;height:1px;background:rgba(255,255,255,.08);margin:0 2rem">
 
 <div class="section" id="partners">
   <h2 class="section-title">PARTNERS</h2>
   <p class="section-desc">ดิสคอร์ดพาร์ทเนอร์พันธมิตรของเรา</p>
   <div class="contact-grid" id="partnersContainer">
-    <div class="loading-state" style="grid-column: 1/-1;">กำลังโหลดพาร์ทเนอร์...</div>
+    <div class="loading-state" style="grid-column:1/-1"><div class="loading-spinner"></div>กำลังดึงข้อมูลพาร์ทเนอร์...</div>
   </div>
 </div>
 
-<footer>
-  &copy; 2026 <span>FAMILY LOPEZ</span>. All Rights Reserved.
-</footer>
+<footer><span>FAMILY LOPEZ</span> · 2026</footer>
+<div id="youtube-player" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none"></div>
 
 <script>
-/* =======================================================
-   กำหนดค่าเชื่อมต่อข้อมูลพาร์ทเนอร์และสมาชิก (API Google Sheets)
-   ======================================================= */
-// เปลี่ยนเป็น URL ของ Google Web App API ของคุณ
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_9eYpY7G65fE86_hA99mK-DInSNoE5m-F3o3g48E3p6r9989Yp-A/exec"; 
+const SHEET_ID = '1Pn8ga2UX1otxaLNjDTZNG1OMn2HXCqugGti0EGuMIaI'; // ลิงค์ sheet
+const REFRESH_MS = 30000; // เรียลไทม์: รีเฟรชทุก 30 วินาที
 
-let allSearchableMembers = [];
+function sheetUrl(tab) {
+  const base = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json';
+  return tab ? base + '&sheet=' + encodeURIComponent(tab) + '&t=' + Date.now() : base + '&t=' + Date.now();
+}
 
-// ฟังก์ชันแปลงตัวแรกเป็นพิมพ์ใหญ่สำหรับทำอวตารกรณีไม่มีรูป
+async function fetchSheet(tab) {
+  const res = await fetch(sheetUrl(tab));
+  const text = await res.text();
+  const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);?\s*$/);
+  if (!m) throw new Error('Invalid sheet response for ' + (tab||'default'));
+  return JSON.parse(m[1]).table.rows || [];
+}
+
 function getInitials(name) {
-  return name ? name.charAt(0).toUpperCase() : '?';
+  const p = (name||'').trim().split(' ');
+  return p.length >= 2 ? (p[0][0]+p[1][0]).toUpperCase() : (name||'??').slice(0,2).toUpperCase();
 }
 
-/* =======================================================
-   ระบบ REAL-TIME DATA FETCHING (ดึงข้อมูลอัตโนมัติ)
-   ======================================================= */
+// ====== MEMBERS ======
+let allMembers = [];
 
-// 1. ดึงข้อมูลรายชื่อสมาชิก (Real-time)
+function makeCard(m, extraClass) {
+  extraClass = extraClass || '';
+  const isFounder = m.role === 'founder';
+  const isLeader = m.role === 'leader';
+  const fbUrl = m.facebook || ('https://www.facebook.com/search/people/?q=' + encodeURIComponent(m.name));
+  const initials = getInitials(m.name);
+  const badge = isFounder
+    ? '<div class="role-badge badge-founder">⭐ FOUNDER ⭐</div>'
+    : isLeader
+    ? '<div class="role-badge badge-leader">LEADER</div>'
+    : '<div class="member-num"></div>'; //#' + String(m.n).padStart(2,'0') + ' เพิ่ม #No ได้
+  const avatarInner = m.img
+    ? '<img src="' + m.img + '" alt="' + m.name + '" onerror="this.style.display=\'none\'">'
+    : initials;
+  const card = document.createElement('div');
+  card.className = ('member-card ' + extraClass).trim();
+  card.dataset.name = (m.name||'').toLowerCase();
+  card.innerHTML = badge +
+    '<div class="member-avatar">' + avatarInner + '</div>' +
+    '<div class="member-name">' + m.name + '</div>' +
+    '<a class="fb-btn" href="' + fbUrl + '" target="_blank" rel="noopener">' +
+    '<svg width="10" height="10" viewBox="0 0 24 24" fill="#7b5fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>' +
+    'Facebook</a>';
+  return card;
+}
+
 async function loadMembers() {
+  const container = document.getElementById('membersContainer');
   try {
-    const response = await fetch(`${SCRIPT_URL}?tab=members`);
-    const data = await response.json();
-    
-    if (!data || data.length === 0) {
-      document.getElementById('membersGrid').innerHTML = '<div class="loading-state" style="grid-column:1/-1">ไม่พบข้อมูลสมาชิก</div>';
-      return;
-    }
-
-    allSearchableMembers = data;
-    
-    // อัปเดตคำอธิบายจำนวนสมาชิกในหัวข้อหลัก
-    document.getElementById('memberDesc').textContent = `${data.length} คนที่เป็นส่วนหนึ่งของ Family Lopez`;
-    
-    // แสดงผลข้อมูลลง Grid
-    renderMembersGrid(data);
-    
-  } catch (err) {
-    console.error(err);
-    document.getElementById('membersGrid').innerHTML = `<div class="error-state" style="grid-column:1/-1">&#9888;&#65039; โหลดรายชื่อสมาชิกไม่ได้: ${err.message}</div>`;
-  }
-}
-
-// ฟังก์ชันสำหรับ Render จัดกลุ่ม Founder, Co-Leader, และ Member
-function renderMembersGrid(members) {
-  const container = document.getElementById('membersGrid');
-  container.innerHTML = '';
-
-  // แยกกลุ่มตำแหน่ง
-  const founders = members.filter(m => m.role && m.role.toLowerCase() === 'founder');
-  const leaders = members.filter(m => m.role && (m.role.toLowerCase() === 'co-leader' || m.role.toLowerCase() === 'leader'));
-  const normalMembers = members.filter(m => !m.role || (m.role.toLowerCase() !== 'founder' && m.role.toLowerCase() !== 'co-leader' && m.role.toLowerCase() !== 'leader'));
-
-  // 1. Render Founder
-  founders.forEach(m => {
-    container.innerHTML += makeMemberCardHtml(m, 'founder');
-  });
-
-  // 2. Render Leaders Section (ถ้ามี)
-  if (leaders.length > 0) {
-    let leadersHtml = `
-      <div class="leaders-section" id="leadersSection">
-        <div class="leaders-section-title">ผู้ดูแลประจำแฟมิลี่</div>
-        <div class="leaders-inner">
-    `;
-    leaders.forEach(m => {
-      leadersHtml += makeMemberCardHtml(m, 'co-leader');
+    const rows = await fetchSheet();
+    let founders = [], leaders = [], members = [];
+    let num = 1;
+    rows.forEach(function(row) {
+      const c = row.c || [];
+      const name = (c[0] && c[0].v) ? c[0].v.toString().trim() : '';
+      const role = (c[1] && c[1].v) ? c[1].v.toString().trim().toLowerCase() : 'member';
+      const img  = (c[2] && c[2].v) ? c[2].v.toString().trim() : '';
+      const facebook = (c[3] && c[3].v) ? c[3].v.toString().trim() : '';
+      if (!name) return;
+      const m = {n: num++, name: name, role: role, img: img, facebook: facebook};
+      if (role === 'founder') founders.push(m);
+      else if (role === 'leader') leaders.push(m);
+      else members.push(m);
     });
-    leadersHtml += `</div></div>`;
-    container.insertAdjacentHTML('beforeend', leadersHtml);
+    const az = function(a, b) { return a.name.localeCompare(b.name); };
+    leaders.sort(az); members.sort(az);
+    allMembers = founders.concat(leaders).concat(members);
+    const total = allMembers.length;
+    document.getElementById('liveCount').textContent = total + ' MEMBERS';
+    document.getElementById('memberDesc').textContent = total + ' คนที่เป็นส่วนหนึ่งของ Family Lopez';
+    document.getElementById('resultCount').textContent = 'แสดง ' + total + ' / ' + total + ' คน';
+    document.getElementById('searchWrap').style.display = '';
+    const grid = document.createElement('div');
+    grid.className = 'members-grid';
+    grid.id = 'membersGrid';
+    founders.forEach(function(m) { grid.appendChild(makeCard(m, 'founder')); });
+    if (leaders.length) {
+      const box = document.createElement('div');
+      box.className = 'group-section leaders';
+      box.innerHTML = '<div class="group-title">👑 Leaders 👑</div>';
+      const inner = document.createElement('div');
+      inner.className = 'group-inner';
+      leaders.forEach(function(m) { inner.appendChild(makeCard(m, 'co-leader')); });
+      box.appendChild(inner); grid.appendChild(box);
+    }
+    if (members.length) {
+      const box = document.createElement('div');
+      box.className = 'group-section members-group';
+      box.innerHTML = '<div class="group-title">Members</div>';
+      const inner = document.createElement('div');
+      inner.className = 'group-inner';
+      members.forEach(function(m) { inner.appendChild(makeCard(m, '')); });
+      box.appendChild(inner); grid.appendChild(box);
+    }
+    container.innerHTML = '';
+    container.appendChild(grid);
+    filterMembers();
+  } catch(err) {
+    container.innerHTML = '<div class="error-state">&#9888;&#65039; โหลดข้อมูลไม่ได้<br><br>กรุณาตรวจสอบว่า Google Sheets ตั้งค่าเป็น<br><strong>"Anyone with the link &rarr; Viewer"</strong> แล้ว<br><br><small>' + err.message + '</small></div>';
+    document.getElementById('liveCount').textContent = 'โหลดไม่ได้';
   }
+}
 
-  // 3. Render สมาชิกทั่วไป
-  normalMembers.forEach(m => {
-    container.innerHTML += makeMemberCardHtml(m, 'member');
+function filterMembers() {
+  const input = document.getElementById('searchInput');
+  const q = input ? input.value.toLowerCase().trim() : '';
+  const grid = document.getElementById('membersGrid');
+  if (!grid) return;
+  let count = 0;
+  grid.querySelectorAll('.member-card.founder').forEach(function(c) {
+    const show = c.dataset.name.includes(q);
+    c.classList.toggle('hidden', !show);
+    if (show) count++;
   });
-
-  // อัปเดตตัวนับช่องค้นหา
-  filterMembers(); 
+  grid.querySelectorAll('.group-section').forEach(function(box) {
+    let visible = 0;
+    box.querySelectorAll('.member-card').forEach(function(c) {
+      const show = c.dataset.name.includes(q);
+      c.classList.toggle('hidden', !show);
+      if (show) { count++; visible++; }
+    });
+    box.style.display = visible === 0 ? 'none' : '';
+  });
+  document.getElementById('resultCount').textContent = 'แสดง ' + count + ' / ' + allMembers.length + ' คน';
 }
 
-// ฟังก์ชันสร้าง Card HTML ของแต่ละคน
-function makeMemberCardHtml(member, typeClass) {
-  const avatarContent = member.avatar 
-    ? `<img src="${member.avatar}" alt="${member.name}" onerror="this.onerror=null; this.parentNode.innerHTML='${getInitials(member.name)}';">` 
-    : getInitials(member.name);
+// ====== CONTACT & PARTNERS (realtime) ======
+const FB_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
+const DC_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>';
 
-  let badgeHtml = '';
-  if (typeClass === 'founder') badgeHtml = '<div class="role-badge badge-founder">&#128081; FOUNDER</div>';
-  if (typeClass === 'co-leader') badgeHtml = `<div class="role-badge badge-leader">&#9813; ${member.role.toUpperCase()}</div>`;
+function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];}); }
 
-  return `
-    <div class="member-card ${typeClass}" data-name="${member.name.toLowerCase()}">
-      ${badgeHtml}
-      <div class="member-avatar">${avatarContent}</div>
-      <div class="member-name">${member.name}</div>
-      ${member.facebook ? `<a class="fb-btn" href="${member.facebook}" target="_blank" rel="noopener">FACEBOOK</a>` : ''}
-    </div>
-  `;
+function detectType(url, hinted) {
+  const t = (hinted||'').toLowerCase();
+  if (t.includes('fb') || t.includes('face')) return 'fb';
+  if (t.includes('dc') || t.includes('disc')) return 'discord';
+  const u = (url||'').toLowerCase();
+  if (u.includes('facebook.com')) return 'fb';
+  if (u.includes('discord')) return 'discord';
+  return 'discord';
 }
 
-// 2. ดึงข้อมูล Contacts และ Partners (Real-time)
-async function loadSocialTab(tabName, containerId, emptyText) {
+function makeSocialCard(item) {
+  const type = detectType(item.url, item.type);
+  const icon = type === 'fb' ? FB_SVG : DC_SVG;
+  const handle = item.handle || (item.url||'').replace(/^https?:\/\//,'').replace(/\/$/,'');
+  return '<a class="social-card ' + type + '" href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener">' +
+    '<div class="social-icon ' + type + '">' + icon + '</div>' +
+    '<div class="social-info"><div class="social-name">' + escapeHtml(item.name) + '</div><div class="social-handle">' + escapeHtml(handle) + '</div></div>' +
+    '<div class="social-arrow">&rarr;</div></a>';
+}
+
+function rowToItem(row) {
+  const c = row.c || [];
+  const val = function(i){ return (c[i] && c[i].v != null) ? c[i].v.toString().trim() : ''; };
+  return { name: val(0), url: val(1), handle: val(2), type: val(3) };
+}
+
+async function loadSocial(tab, containerId, emptyText) {
   const container = document.getElementById(containerId);
   try {
-    const response = await fetch(`${SCRIPT_URL}?tab=${tabName}`);
-    const data = await response.json();
-    
-    if (!data || data.length === 0) {
-      container.innerHTML = `<div class="loading-state" style="grid-column:1/-1">${emptyText}</div>`;
+    const rows = await fetchSheet(tab);
+    const items = rows.map(rowToItem).filter(function(x){ return x.name && x.url; });
+    if (!items.length) {
+      container.innerHTML = '<div class="loading-state" style="grid-column:1/-1">' + emptyText + '</div>';
       return;
     }
-
-    container.innerHTML = data.map(item => {
-      const isDiscord = item.url.includes('discord');
-      const cardTypeClass = isDiscord ? 'discord' : 'fb';
-      const iconSvg = isDiscord 
-        ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084-.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>`
-        : `<svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
-
-      return `
-        <a class="social-card ${cardTypeClass}" href="${item.url}" target="_blank" rel="noopener">
-          <div class="social-icon ${cardTypeClass}">${iconSvg}</div>
-          <div class="social-info">
-            <div class="social-name">${item.name}</div>
-            <div class="social-handle">${item.handle || item.url}</div>
-          </div>
-          <div class="social-arrow">&rarr;</div>
-        </a>
-      `;
-    }).join('');
-
-  } catch (err) {
-    container.innerHTML = `<div class="error-state" style="grid-column:1/-1">&#9888;&#65039; โหลดข้อมูลสตรีม "${tabName}" ไม่สำเร็จ</div>`;
+    container.innerHTML = items.map(makeSocialCard).join('');
+  } catch(err) {
+    container.innerHTML = '<div class="error-state" style="grid-column:1/-1">&#9888;&#65039; โหลดแท็บ "' + tab + '" ไม่ได้<br><small>' + err.message + '</small></div>';
   }
 }
 
-// สั่งดึงข้อมูลทุกแท็บพร้อมกัน
-function refreshAllData() {
+function refreshAll() {
   loadMembers();
-  loadSocialTab('contacts', 'contactContainer', 'ยังไม่มีข้อมูลในแท็บ contacts');
-  loadSocialTab('partners', 'partnersContainer', 'ยังไม่มีข้อมูลในแท็บ partners');
+  loadSocial('contacts', 'contactContainer', 'ยังไม่มีข้อมูลในแท็บ contacts');
+  loadSocial('partners', 'partnersContainer', 'ยังไม่มีข้อมูลในแท็บ partners');
 }
 
-// ตั้งเวลาให้ดึงข้อมูลใหม่แบบ Real-time ทุกๆ 30 วินาทีอัตโนมัติ (30000ms)
-setInterval(refreshAllData, 30000);
-
-
-/* =======================================================
-   ระบบตัวกรองการค้นหาสมาชิก (Search Filter)
-   ======================================================= */
-function filterMembers() {
-  const query = document.getElementById('searchInput').value.toLowerCase().trim();
-  const cards = document.querySelectorAll('.member-card');
-  let visibleCount = 0;
-  let leaderVisible = 0;
-
-  cards.forEach(card => {
-    const name = card.dataset.name;
-    const isMatch = name.includes(query);
-    card.classList.toggle('hidden', !isMatch);
-    
-    if (isMatch) {
-      visibleCount++;
-      if (card.parentElement.classList.contains('leaders-inner')) {
-        leaderVisible++;
-      }
-    }
-  });
-
-  // ซ่อนกล่องโซนผู้ดูแลระบบทั้งหมด หากค้นหาแล้วไม่เจอในกลุ่มผู้ดูแล
-  const leadersSection = document.getElementById('leadersSection');
-  if (leadersSection) {
-    leadersSection.style.display = leaderVisible === 0 ? 'none' : '';
-  }
-
-  document.getElementById('resultCount').textContent = `แสดง ${visibleCount} / ${allSearchableMembers.length} คน`;
-}
-
-
-/* =======================================================
-   ระบบเสียงเพลงพื้นหลังอัตโนมัติ (YOUTUBE BACKGROUND MUSIC)
-   ======================================================= */
-const YOUTUBE_VIDEO_ID = 'wXOdV64bd5VM'; // แก้เป็นไอดีเพลงของคุณตามต้องการ
-const MUSIC_VOLUME = 2; 
-
+// ====== YouTube + Enter ======
 var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+tag.src = 'https://www.youtube.com/iframe_api';
+document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtube-player', {
-    height: '0', width: '0',
-    videoId: YOUTUBE_VIDEO_ID,
-    playerVars: {
-      'autoplay': 0, 'controls': 0, 'loop': 1,
-      'playlist': YOUTUBE_VIDEO_ID, 'rel': 0
-    },
-    events: { 'onReady': onPlayerReady }
+    height: '0', width: '0', videoId: 'wXOdV6bd5VM', // ลิงค์เพลง
+    playerVars: {autoplay:0, controls:0, loop:1, playlist:'wXOdV6bd5VM', rel:0},
+    events: {onReady: function(e){ e.target.setVolume(3); }} // เพิ่ม ลด เสียง
   });
 }
-
-function onPlayerReady(event) {
-  event.target.setVolume(MUSIC_VOLUME);
-}
-
-// ฟังก์ชันทำงานเมื่อกดปุ่ม Enter
 function enterSite() {
   document.getElementById('enterOverlay').classList.add('fade-out');
-  
-  if (player && typeof player.playVideo === 'function') {
-    player.playVideo();
-  }
-  
-  // เรียกข้อมูลครั้งแรกทันทีเมื่อเข้าหน้าเว็บ
-  refreshAllData();
+  if (player && typeof player.playVideo === 'function') player.playVideo();
 }
-</script>
 
+refreshAll();
+setInterval(refreshAll, REFRESH_MS);
+</script>
 </body>
 </html>
