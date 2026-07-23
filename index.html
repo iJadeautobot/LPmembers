@@ -23,30 +23,21 @@
     .nav-links a:hover{color:var(--purple-light)}
 
     /* HERO (HEADER) SECTION WITH BACKGROUND IMAGE  */
-    /* 1. ปรับระยะความสูงของกล่อง Hero ให้กว้างขึ้นอีกนิด */
-.hero {
-  text-align: center;
-  padding: 7rem 2rem 6rem; /* ปรับเพิ่มความสูง บน-ล่าง ให้พื้นที่กว้างพอสำหรับโลโก้ */
-  position: relative;
-  overflow: hidden;
-}
-
-/* 2. ปรับการแสดงผลรูปโลโก้พื้นหลัง */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("https://i.ibb.co/j9x8wh4j/image.png"); /* เปลี่ยนเป็น Direct Link ของคุณ */
-  
-  /* --- แก้จุดนี้เพื่อไม่ให้โลโก้โดนครอป --- */
-  background-size: contain; /* บังคับให้แสดงรูปครบทั้งรูป ไม่ถูกตัดขอบ */
-  background-position: center;
-  background-repeat: no-repeat;
-  
-  opacity: 0.2; /* ปรับความเข้ม/จางของโลโก้ตามใจชอบ */
-  z-index: 0;
-  pointer-events: none;
-}
+    .hero{text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+    
+    /* ปรับขนาดรูปพื้นหลังให้ใหญ่ขึ้นตรงนี้ */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("https://i.ibb.co/j9x8wh4j/image.png");
+      background-size: 500px auto; /* ขยายขนาดความกว้างขึ้นมาเป็น 450px (สามารถปรับค่าตามใจชอบได้เลยครับ) */
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.12; /* ปรับระดับความจาง (0.0 - 1.0) */
+      z-index: 0;
+      pointer-events: none;
+    }
     
     .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,63,255,.10) 0%,rgba(10,10,15,.6) 70%);pointer-events:none;z-index: 1;}
     
